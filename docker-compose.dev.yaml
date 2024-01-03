@@ -18,11 +18,23 @@ services:
       - db
       - redis
 
-  celery:
+  celery-worker:
     build:
       context: .
       dockerfile: docker/dev/Dockerfile
     command: "poetry run celery -A ppr worker -l info"
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - redis
+      - db
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    command: "poetry run celery -A ppr beat -l info"
     env_file:
       - ./.env
     depends_on:
