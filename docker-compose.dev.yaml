@@ -1,0 +1,58 @@
+---
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - redis
+
+  celery-worker:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    command: "poetry run celery -A ppr worker -l info"
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - redis
+      - db
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: docker/dev/Dockerfile
+    command: "poetry run celery -A ppr beat -l info"
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - redis
+      - db
+
+  db:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ppr
+    ports:
+      - "5432:5432"
+
+  redis:
+    image: redis:7.0.5
+    ports:
+      - "6379:6379"
+    restart: unless-stopped

@@ -16,7 +16,12 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 # Load task modules from all registered Django apps.
 app.autodiscover_tasks()
 
-
-@app.task(bind=True, ignore_result=True)
-def debug_task(self):
-    print(f"Request: {self.request!r}")
+app.conf.beat_schedule = {
+    # Scheduler Name
+    "print-time-twenty-seconds": {
+        # Task Name (Name Specified in Decorator)
+        "task": "load_properties",
+        # Schedule
+        "schedule": 20.0,
+    },
+}
