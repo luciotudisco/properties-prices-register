@@ -1,7 +1,7 @@
 .ONESHELL:
 
 runserver:
-	poetry run python manage.py runserver
+	docker compose build && docker compose up
 
 lint:
 	poetry run pre-commit run --all-files

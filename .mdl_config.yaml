@@ -2,11 +2,6 @@
 # Default state for all rules
 default: true
 
-# MD003/heading-style/header-style - Heading style
-MD003:
-  # Enforce the ATX-closed style of header
-  style: "atx_closed"
-
 # MD004/ul-style - Unordered list style
 MD004:
   # Enforce dashes for unordered lists
