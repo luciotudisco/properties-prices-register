@@ -17,11 +17,8 @@ app.config_from_object("django.conf:settings", namespace="CELERY")
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    # Scheduler Name
-    "print-time-twenty-seconds": {
-        # Task Name (Name Specified in Decorator)
+    "load_properties": {
         "task": "load_properties",
-        # Schedule
-        "schedule": 20.0,
+        "schedule": 5.0,
     },
 }
