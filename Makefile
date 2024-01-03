@@ -1,7 +1,7 @@
 .ONESHELL:
 
 runserver:
-	docker compose build && docker compose up
+	docker compose -f docker-compose.dev.yaml build && docker compose -f docker-compose.dev.yaml up
 
 lint:
 	poetry run pre-commit run --all-files
