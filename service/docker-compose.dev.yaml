@@ -1,0 +1,86 @@
+---
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./.env
+    restart: unless-stopped
+    depends_on:
+      - db
+      - localstack
+
+  celery-workers:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: "poetry run celery -A ppr worker --loglevel=info -P eventlet"
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - localstack
+      - db
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: "poetry run celery -A ppr beat -l info"
+    env_file:
+      - ./.env
+    depends_on:
+      - web
+      - localstack
+      - db
+
+  db:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=ppr
+    ports:
+      - "5432:5432"
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=s3,sqs
+      - AWS_DEFAULT_REGION=eu-west-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DEBUG=1
+      - HOSTNAME=localhost
+      - LOCALSTACK_HOST=localstack
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  aws-cli:
+    image: amazon/aws-cli
+    depends_on:
+      - localstack
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=eu-west-1
+    entrypoint: /bin/sh -c
+    # yamllint disable rule:line-length
+    command: >
+      "
+        aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name celery-queue
+        aws --endpoint-url=http://localstack:4566 s3 mb s3://properties-prices-register-static-images
+      "
+    # yamllint enable rule:line-length
