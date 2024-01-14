@@ -8,7 +8,6 @@ from rest_framework import generics
 
 class PropertiesListView(generics.ListAPIView):
     filterset_fields = {
-        "area": ["exact"],
         "county": ["exact"],
         "locality": ["exact"],
         "neighborhood": ["exact"],
@@ -23,7 +22,6 @@ class PropertiesListView(generics.ListAPIView):
 
 class PropertiesStatsView(AggregationViewSet):
     filterset_fields = {
-        "area": ["exact"],
         "county": ["exact"],
         "locality": ["exact"],
         "neighborhood": ["exact"],
