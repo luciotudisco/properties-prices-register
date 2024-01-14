@@ -39,7 +39,7 @@ class PropertiesListViewTests(TestCase):
         )
 
     def test_list_properties(self):
-        response = self.client.get("/v1/properties")
+        response = self.client.get("/v1/properties/")
         self.assertEqual(response.status_code, HTTP_200_OK)
         json_response = json.loads(response.content)
         self.assertEqual(json_response["count"], 3)
@@ -48,7 +48,7 @@ class PropertiesListViewTests(TestCase):
         self.assertEqual(json_response["results"][2]["id"], str(self.property_mayo_1.id))
 
     def test_list_properties_with_filter(self):
-        response = self.client.get(f"/v1/properties?county={County.DUBLIN}")
+        response = self.client.get(f"/v1/properties/?county={County.DUBLIN}")
         self.assertEqual(response.status_code, HTTP_200_OK)
         json_response = json.loads(response.content)
         self.assertEqual(json_response["count"], 2)
