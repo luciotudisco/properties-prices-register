@@ -1,0 +1,102 @@
+# yamllint disable rule:line-length
+---
+version: "3.9"
+
+x-common-variables: &common-variables
+  DB_HOST: db
+  DB_NAME: ppr
+  DB_PASSWORD: test
+  DB_PORT: 5432
+  DB_USER: test
+  ALGOLIA_API_KEY: ${ALGOLIA_API_KEY:-test}
+  ALGOLIA_APP_ID: ${ALGOLIA_APP_ID:-test}
+  ALGOLIA_PROPERTIES_INDEX_NAME: properties-test
+  AWS_ACCESS_KEY_ID: test
+  AWS_ACCESS_KEY: test
+  DJANGO_ALLOWED_HOSTS: localhost 127.0.0.1 [::1]
+  DEBUG: 1
+  GEOCODE_API_KEY: ${GEOCODE_API_KEY:-test}
+  DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:-test}
+  SQS_DEFAULT_QUEUE_URL: http://sqs.eu-west-1.localstack:4566/000000000000/celery-queue
+  CELERY_BROKER_URL: sqs://test:test@localstack:4566/0
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: api
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    environment: *common-variables
+    restart: unless-stopped
+    depends_on:
+      - db
+      - localstack
+
+  celery-workers:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: "poetry run celery -A ppr worker -P eventlet -Q celery-queue"
+    environment: *common-variables
+    restart: unless-stopped
+    depends_on:
+      - api
+      - localstack
+      - db
+
+  celery-beat:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    command: "poetry run celery -A ppr beat -l info"
+    environment: *common-variables
+    restart: unless-stopped
+    depends_on:
+      - api
+      - localstack
+      - db
+
+  db:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=test
+      - POSTGRES_DB=ppr
+    ports:
+      - "5432:5432"
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=s3,sqs
+      - AWS_DEFAULT_REGION=eu-west-1
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - DEBUG=1
+      - HOSTNAME=localhost
+      - LOCALSTACK_HOST=localstack
+    volumes:
+      - "${LOCALSTACK_VOLUME_DIR:-./volume}:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  aws-cli:
+    image: amazon/aws-cli
+    depends_on:
+      - localstack
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+      - AWS_DEFAULT_REGION=eu-west-1
+    entrypoint: /bin/sh -c
+    command: >
+      "
+        aws --endpoint-url=http://localstack:4566 sqs create-queue --queue-name celery-queue
+      "
