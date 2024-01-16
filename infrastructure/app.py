@@ -3,6 +3,7 @@ import aws_cdk as cdk
 
 from infrastructure.database_stack import DatabaseStack
 from infrastructure.dns_stack import DNSStack
+from infrastructure.fargate_portal_stack import FargatePortalStack
 from infrastructure.fargate_service_stack import FargateServiceStack
 from infrastructure.fargate_workers_stack import FargateWorkersStack
 from infrastructure.network_stack import NetworkStack
@@ -56,12 +57,19 @@ fargate_workers_stack = FargateWorkersStack(
     env=env,
 )
 
+fargate_portal_stack = FargatePortalStack(
+    scope=app,
+    construct_id="FargatePortalStack",
+    ecs_cluster=network_stack.ecs_cluster,
+    env=env,
+)
+
 dns_stack = DNSStack(
     scope=app,
     construct_id="DNSStack",
-    alb=fargate_service_stack.alb_fargate_service.load_balancer,
     domain_name="irishpropertiesprices.com",
-    subdomain_name="api",
+    api_alb=fargate_service_stack.alb_fargate_service.load_balancer,
+    portal_alb=fargate_portal_stack.alb_fargate_service.load_balancer,
     env=env,
 )
 

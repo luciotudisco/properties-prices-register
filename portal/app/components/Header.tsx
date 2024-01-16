@@ -1,5 +1,4 @@
 import { Box, Typography } from "@mui/material";
-import FavoriteTwoToneIcon from "@mui/icons-material/FavoriteTwoTone";
 
 const Header = function (): JSX.Element {
   return (
