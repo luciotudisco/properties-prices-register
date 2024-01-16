@@ -70,3 +70,6 @@ class FargateServiceStack(Stack):
             unhealthy_threshold_count=2,
             interval=Duration.seconds(30),
         )
+
+        scalable_target = self.alb_fargate_service.service.auto_scale_task_count(min_capacity=1, max_capacity=2)
+        scalable_target.scale_on_cpu_utilization("CpuScaling", target_utilization_percent=70)
