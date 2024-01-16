@@ -1,0 +1,13 @@
+# yamllint disable rule:line-length
+---
+version: "3.9"
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: portal
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
