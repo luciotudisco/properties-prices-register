@@ -1,13 +1,12 @@
-import { Badge, Box, Button, Divider, Drawer } from "@mui/material";
+import { Badge, Box, Button, Drawer } from "@mui/material";
 import {
-  ClearRefinements,
-  RefinementList,
   SearchBox,
   useCurrentRefinements,
   useRefinementList,
 } from "react-instantsearch";
 import "instantsearch.css/themes/satellite.css";
 import { useState } from "react";
+import SearchFilters from "./SearchFilters";
 
 const SearchBar = function (): JSX.Element {
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -29,34 +28,7 @@ const SearchBar = function (): JSX.Element {
         onClose={() => setShowFilters(false)}
         PaperProps={{ style: { width: "30%" } }}
       >
-        <Box className="flex flex-col gap-10 p-5">
-          <ClearRefinements />
-          <Divider />
-          <RefinementList
-            attribute="county"
-            limit={5}
-            searchable={true}
-            showMore={true}
-          />
-          <RefinementList
-            attribute="locality"
-            limit={5}
-            searchable={true}
-            showMore={true}
-          />
-          <RefinementList
-            attribute="neighborhood"
-            limit={5}
-            searchable={true}
-            showMore={true}
-          />
-          <RefinementList
-            attribute="street"
-            limit={5}
-            searchable={true}
-            showMore={true}
-          />
-        </Box>
+        <SearchFilters />
       </Drawer>
     </Box>
   );

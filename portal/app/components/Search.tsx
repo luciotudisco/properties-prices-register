@@ -1,9 +1,12 @@
 import { Grid, Stack } from "@mui/material";
-import { InfiniteHits } from "react-instantsearch";
+import { InfiniteHits, useInstantSearch } from "react-instantsearch";
 import SearchHit from "./SearchHit";
 import SearchBar from "./SearchBar";
+import EmptyHits from "./EmptyHits";
 
 const Search = function (): JSX.Element {
+  const { results } = useInstantSearch();
+
   return (
     <Stack className="h-full w-full">
       <SearchBar />
@@ -16,15 +19,19 @@ const Search = function (): JSX.Element {
           lg={8}
           className="flex flex-col w-full h-full align-middle items-center gap-5"
         >
-          <InfiniteHits
-            classNames={{
-              root: "SearchInfiniteHits",
-              list: "SearchInfiniteHitsList",
-              item: "SearchInfiniteHitsItem",
-            }}
-            hitComponent={SearchHit}
-            showPrevious={false}
-          />
+          {!results.__isArtificial && results.nbHits === 0 ? (
+            <EmptyHits />
+          ) : (
+            <InfiniteHits
+              classNames={{
+                root: "SearchInfiniteHits",
+                list: "SearchInfiniteHitsList",
+                item: "SearchInfiniteHitsItem",
+              }}
+              hitComponent={SearchHit}
+              showPrevious={false}
+            />
+          )}
         </Grid>
         <Grid item sm={0} md={0} lg={2} />
       </Grid>

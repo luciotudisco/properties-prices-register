@@ -2,20 +2,21 @@
 
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
 import Image from "next/image";
+import Link from "next/link";
 
 const Header = function (): JSX.Element {
   return (
-    <AppBar position="fixed" className="h-20 flex justify-center">
+    <AppBar
+      position="fixed"
+      className="h-20 flex justify-center bg-emerald-800"
+    >
       <Toolbar className="flex h-full flex-row justify-between">
         <Box className="flex flex-row gap-2 items-center">
-          <Typography
-            className="text-white"
-            variant="h1"
-            fontSize="large"
-            fontFamily="monospace"
-          >
-            Properties Prices Register
-          </Typography>
+          <Link href="/">
+            <Typography className="text-white" textTransform="uppercase">
+              Properties Prices Register
+            </Typography>
+          </Link>
           <Image
             src="/work-in-progress.png"
             alt="logo"
@@ -24,12 +25,16 @@ const Header = function (): JSX.Element {
           />
         </Box>
         <Box className="flex flex-row gap-2">
-          <Button variant="text" href="/api" className="text-white">
-            API
-          </Button>
-          <Button variant="text" href="/about" className="text-white">
-            About
-          </Button>
+          <Link href="/api">
+            <Button variant="text" className="text-white">
+              API
+            </Button>
+          </Link>
+          <Link href="/about">
+            <Button variant="text" className="text-white">
+              About
+            </Button>
+          </Link>
         </Box>
       </Toolbar>
     </AppBar>

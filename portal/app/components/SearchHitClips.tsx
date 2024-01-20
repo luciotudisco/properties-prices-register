@@ -11,27 +11,19 @@ const SearchHitClips = function (props: {
   const { setIndexUiState } = useInstantSearch();
 
   function refine(
-    includeLocality?: boolean,
-    includeNeighborhood?: boolean,
-    includeStreet?: boolean,
+    includeLocality: boolean,
+    includeNeighborhood: boolean,
+    includeStreet: boolean,
   ) {
-    const refinementList: { [attribute: string]: string[] } = {};
-    refinementList["county"] = [county];
-    if (includeLocality && locality) {
-      refinementList["locality"] = [locality];
-    }
-    if (includeNeighborhood && neighborhood) {
-      refinementList["neighborhood"] = [neighborhood];
-    }
-    if (includeStreet && street) {
-      refinementList["street"] = [street];
-    }
     setIndexUiState((prevIndexUiState) => ({
       ...prevIndexUiState,
       query: "",
       refinementList: {
         ...prevIndexUiState.refinementList,
-        ...refinementList,
+        county: [county],
+        locality: includeLocality && locality ? [locality] : [],
+        neighborhood: includeNeighborhood && neighborhood ? [neighborhood] : [],
+        street: includeStreet && street ? [street] : [],
       },
     }));
   }
@@ -42,7 +34,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={county}
           size="small"
-          className="bg-orange-200"
+          className="bg-amber-500"
           onClick={() => refine(false, false, false)}
         />
       )}
@@ -50,7 +42,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={locality}
           size="small"
-          className="bg-orange-200"
+          className="bg-amber-500"
           onClick={() => refine(true, false, false)}
         />
       )}
@@ -58,7 +50,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={neighborhood}
           size="small"
-          className="bg-orange-200"
+          className="bg-amber-500"
           onClick={() => refine(true, true, false)}
         />
       )}
@@ -66,7 +58,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={street}
           size="small"
-          className="bg-orange-200"
+          className="bg-amber-500"
           onClick={() => refine(true, true, true)}
         />
       )}
