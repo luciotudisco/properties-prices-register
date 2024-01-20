@@ -11,7 +11,7 @@ const Search = function (): JSX.Element {
     <Stack className="h-full w-full">
       <SearchBar />
       <Grid container className="flex w-full p-10 overflow-y-auto">
-        <Grid item sm={0} md={0} lg={2} className="bg-red" />
+        <Grid item sm={0} md={0} lg={2} />
         <Grid
           item
           sm={12}

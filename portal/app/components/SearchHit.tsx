@@ -28,7 +28,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
           value={hit.price}
           displayType="text"
           thousandSeparator={true}
-          className="text-gray-900 text-xl font-bold"
+          className="text-gray-900 text-lg font-bold"
           prefix="€"
         />
         <Typography className="text-gray-500" variant="h5" fontSize="small">

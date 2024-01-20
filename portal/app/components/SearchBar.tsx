@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Drawer } from "@mui/material";
+import { Badge, Box, Button, Drawer, Grid } from "@mui/material";
 import {
   SearchBox,
   useClearRefinements,
@@ -19,12 +19,16 @@ const SearchBar = function (): JSX.Element {
   const { refine } = useClearRefinements();
 
   return (
-    <Box className="flex flex-row w-full border-b-2 p-5 gap-2">
+    <Box className="flex flex-row w-full border-b-2 p-5 gap-2 bg-emerald-950">
       <SearchBox className="w-full" placeholder="Search property" />
-      <Badge badgeContent={items.length} color="primary">
-        <Button onClick={() => setShowFilters(true)}>Filters</Button>
+      <Badge badgeContent={items.length} color="error">
+        <Button onClick={() => setShowFilters(true)} className="text-white">
+          Filters
+        </Button>
       </Badge>
-      <Button onClick={() => refine()}>Clear</Button>
+      <Button onClick={() => refine()} className="text-white">
+        Clear
+      </Button>
       <Drawer
         anchor="right"
         open={showFilters}
