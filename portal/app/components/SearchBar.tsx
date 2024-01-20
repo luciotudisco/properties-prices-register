@@ -1,6 +1,7 @@
 import { Badge, Box, Button, Drawer } from "@mui/material";
 import {
   SearchBox,
+  useClearRefinements,
   useCurrentRefinements,
   useRefinementList,
 } from "react-instantsearch";
@@ -15,6 +16,7 @@ const SearchBar = function (): JSX.Element {
   useRefinementList({ attribute: "neighborhood" });
   useRefinementList({ attribute: "street" });
   const { items } = useCurrentRefinements();
+  const { refine } = useClearRefinements();
 
   return (
     <Box className="flex flex-row w-full border-b-2 p-5 gap-2">
@@ -22,11 +24,12 @@ const SearchBar = function (): JSX.Element {
       <Badge badgeContent={items.length} color="primary">
         <Button onClick={() => setShowFilters(true)}>Filters</Button>
       </Badge>
+      <Button onClick={() => refine()}>Clear</Button>
       <Drawer
         anchor="right"
         open={showFilters}
         onClose={() => setShowFilters(false)}
-        PaperProps={{ style: { width: "30%" } }}
+        PaperProps={{ sx: { width: "33%" } }}
       >
         <SearchFilters />
       </Drawer>
