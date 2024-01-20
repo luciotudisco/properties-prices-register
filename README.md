@@ -27,7 +27,7 @@ The API supports the following query filters:
 
 - county (e.g. `county=Dublin`, `county=Kildare`, etc.)
 - locality (e.g. `locality=Naas`, `locality=Bray`, etc.)
-- neighborhood (e.g. `neighborhood=Ballsbridge`, `locality=Drumcondra`, etc.)
+- neighborhood (e.g. `neighborhood=Ballsbridge`, `neighborhood=Drumcondra`, etc.)
 - price (e.g. `price__gte=1000000`, `price__lte=50000`, etc.)
 - sale_date (e.g. `sale_date__gte=2023-01-01`, `sale_date__lte=2012-01-01`, etc.)
 
