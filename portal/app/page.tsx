@@ -1,15 +1,27 @@
-import { Typography } from "@mui/material";
-import Image from "next/image";
+"use client";
 
-export default function Home() {
+import algoliasearch from "algoliasearch";
+import Search from "./components/Search";
+import { InstantSearch } from "react-instantsearch";
+import { Box } from "@mui/material";
+
+const searchClient = algoliasearch(
+  "0NVC6NE905",
+  "ef099700e7cf4939581005a45ddcdeec",
+);
+
+export default function SearchPage() {
   return (
-    <main className="flex w-full h-full flex-row justify-center items-center">
-      <Image
-        src="/coming-soon.png"
-        alt="coming soon"
-        width="128"
-        height="128"
-      />
-    </main>
+    <Box className="h-full overflow-auto">
+      <InstantSearch
+        searchClient={searchClient}
+        indexName="properties"
+        future={{
+          preserveSharedStateOnUnmount: true,
+        }}
+      >
+        <Search />
+      </InstantSearch>
+    </Box>
   );
 }

@@ -1,17 +1,24 @@
-import { Box, Typography } from "@mui/material";
+"use client";
+
+import { AppBar, Button, Toolbar, Typography } from "@mui/material";
 
 const Header = function (): JSX.Element {
   return (
-    <Box className="flex w-full h-full align-middle items-center bg-gray-100 border-t-2 border-gray-400 p-5">
-      <Typography
-        className="text-gray-900"
-        variant="h1"
-        fontSize="large"
-        fontFamily="monospace"
-      >
-        Properties Prices Register
-      </Typography>
-    </Box>
+    <AppBar position="fixed" className="h-20 flex justify-center">
+      <Toolbar className="flex h-full flex-row justify-between">
+        <Typography
+          className="text-white"
+          variant="h1"
+          fontSize="large"
+          fontFamily="monospace"
+        >
+          Properties Prices Register
+        </Typography>
+        <Button variant="text" href="/about" className="text-white">
+          About
+        </Button>
+      </Toolbar>
+    </AppBar>
   );
 };
 

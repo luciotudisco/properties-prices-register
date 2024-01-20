@@ -1,10 +1,7 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Properties Prices Register",
@@ -19,11 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col h-screen">
-        <header className="min-h-14">
+        <nav className="h-20">
           <Header />
-        </header>
-        <main className="flex-grow">{children}</main>
-        <footer className="min-h-10">
+        </nav>
+        <main className="flex-1 overflow-y-auto">{children}</main>
+        <footer className="h-14 w-full">
           <Footer />
         </footer>
       </body>
