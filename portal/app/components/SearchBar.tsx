@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Drawer, Grid } from "@mui/material";
+import { Badge, Box, Button, Drawer } from "@mui/material";
 import {
   SearchBox,
   useClearRefinements,
