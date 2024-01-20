@@ -13,10 +13,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 
 const SearchBar = function (): JSX.Element {
   const [showFilters, setShowFilters] = useState<boolean>(false);
+  useRefinementList({ attribute: "property_type" });
   useRefinementList({ attribute: "county" });
   useRefinementList({ attribute: "locality" });
   useRefinementList({ attribute: "neighborhood" });
   useRefinementList({ attribute: "street" });
+  useRefinementList({ attribute: "sale_year" });
   const { items } = useCurrentRefinements();
   const { setIndexUiState } = useInstantSearch();
 

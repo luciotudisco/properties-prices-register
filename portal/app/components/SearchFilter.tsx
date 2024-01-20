@@ -2,8 +2,12 @@ import { Box, Typography } from "@mui/material";
 import { RefinementList } from "react-instantsearch";
 import "instantsearch.css/themes/satellite.css";
 
-const SearchFilter = function (props: { attribute: string }): JSX.Element {
-  const { attribute } = props;
+const SearchFilter = function (props: {
+  attribute: string;
+  label: string;
+  searchable: boolean;
+}): JSX.Element {
+  const { attribute, label, searchable } = props;
 
   return (
     <Box className="flex flex-col gap-2 mt-5">
@@ -14,12 +18,12 @@ const SearchFilter = function (props: { attribute: string }): JSX.Element {
         textTransform="uppercase"
         fontWeight="bold"
       >
-        {attribute}
+        {label}
       </Typography>
       <RefinementList
         attribute={attribute}
         limit={5}
-        searchable={true}
+        searchable={searchable}
         showMore={true}
       />
     </Box>

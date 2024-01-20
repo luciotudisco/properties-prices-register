@@ -8,3 +8,6 @@ lint:
 
 lock:
 	poetry lock
+
+reindex:
+	poetry run python3 algolia/reindex.py

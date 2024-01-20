@@ -31,7 +31,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
           prefix="€"
         />
         <Typography className="text-gray-500" variant="h5" fontSize="small">
-          {Moment(hit.sale_date, "MM/DD/YYYY").format("ll")}
+          {Moment(hit.sale_date * 1000).format("ll")}
         </Typography>
       </Grid>
       <Grid item xs={12}>

@@ -59,10 +59,28 @@ const SearchFilters = function (props: {
       <Divider />
       {nbHits > 0 ? (
         <Box className="flex h-full flex-col gap-5 px-5 my-5">
-          <SearchFilter attribute="county" />
-          <SearchFilter attribute="locality" />
-          <SearchFilter attribute="neighborhood" />
-          <SearchFilter attribute="street" />
+          <SearchFilter
+            attribute="property_type"
+            label="property type"
+            searchable={false}
+          />
+          <SearchFilter attribute="county" label="county" searchable={true} />
+          <SearchFilter
+            attribute="locality"
+            label="locality"
+            searchable={true}
+          />
+          <SearchFilter
+            attribute="neighborhood"
+            label="neighborhood"
+            searchable={true}
+          />
+          <SearchFilter attribute="street" label="street" searchable={true} />
+          <SearchFilter
+            attribute="sale_year"
+            label="sale year"
+            searchable={false}
+          />
         </Box>
       ) : (
         <EmptyFilters />
