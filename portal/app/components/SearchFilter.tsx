@@ -6,7 +6,7 @@ const SearchFilter = function (props: { attribute: string }): JSX.Element {
   const { attribute } = props;
 
   return (
-    <Box className="flex flex-col gap-2">
+    <Box className="flex flex-col gap-2 mt-5">
       <Typography
         className="text-gray-900"
         variant="body1"

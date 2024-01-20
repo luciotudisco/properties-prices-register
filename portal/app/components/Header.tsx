@@ -8,13 +8,13 @@ const Header = function (): JSX.Element {
   return (
     <AppBar
       position="fixed"
-      className="h-20 flex justify-center bg-emerald-800"
+      className="h-14 flex justify-center bg-emerald-800"
     >
       <Toolbar className="flex h-full flex-row justify-between">
         <Box className="flex flex-row gap-2 items-center">
           <Link href="/">
             <Typography className="text-white" textTransform="uppercase">
-              Properties Prices Register
+              Catchy Name
             </Typography>
           </Link>
           <Image

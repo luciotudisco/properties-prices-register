@@ -16,11 +16,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="flex flex-col h-screen">
-        <nav className="h-20">
+        <nav className="h-14">
           <Header />
         </nav>
         <main className="flex-1 overflow-y-auto">{children}</main>
-        <footer className="h-14 w-full">
+        <footer className="h-10 w-full">
           <Footer />
         </footer>
       </body>

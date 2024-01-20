@@ -8,6 +8,7 @@ const Footer = function (): JSX.Element {
         className="text-white"
         variant="caption"
         fontFamily="monospace"
+        fontSize="small"
       >
         Made with{" "}
         <FavoriteTwoToneIcon style={{ fill: "red" }} fontSize="small" /> in

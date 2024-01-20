@@ -1,8 +1,8 @@
 import { Badge, Box, Button, Drawer } from "@mui/material";
 import {
   SearchBox,
-  useClearRefinements,
   useCurrentRefinements,
+  useInstantSearch,
   useRefinementList,
 } from "react-instantsearch";
 import "instantsearch.css/themes/satellite.css";
@@ -16,17 +16,33 @@ const SearchBar = function (): JSX.Element {
   useRefinementList({ attribute: "neighborhood" });
   useRefinementList({ attribute: "street" });
   const { items } = useCurrentRefinements();
-  const { refine } = useClearRefinements();
+  const { setIndexUiState } = useInstantSearch();
+
+  function clearFilters() {
+    setIndexUiState((prevIndexUiState) => ({
+      ...prevIndexUiState,
+      query: "",
+      refinementList: {},
+    }));
+  }
+
+  function openFilters() {
+    setShowFilters(true);
+  }
+
+  function closeFilters() {
+    setShowFilters(false);
+  }
 
   return (
     <Box className="flex flex-row w-full border-b-2 p-5 gap-2 bg-emerald-950">
       <SearchBox className="w-full" placeholder="Search property" />
       <Badge badgeContent={items.length} color="error">
-        <Button onClick={() => setShowFilters(true)} className="text-white">
+        <Button onClick={() => openFilters()} className="text-white">
           Filters
         </Button>
       </Badge>
-      <Button onClick={() => refine()} className="text-white">
+      <Button onClick={() => clearFilters()} className="text-white">
         Clear
       </Button>
       <Drawer
@@ -35,7 +51,7 @@ const SearchBar = function (): JSX.Element {
         onClose={() => setShowFilters(false)}
         PaperProps={{ sx: { width: "33%" } }}
       >
-        <SearchFilters />
+        <SearchFilters close={closeFilters} clear={clearFilters} />
       </Drawer>
     </Box>
   );
