@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 
 const Search = function (): JSX.Element {
   return (
-    <Stack className="h-full w-full items-center justify-center">
+    <Stack className="h-full w-full">
       <SearchBar />
       <Grid container className="flex w-full p-10 overflow-y-auto">
         <Grid item sm={0} md={0} lg={2} className="bg-red" />
