@@ -1,4 +1,4 @@
-import { Chip, Stack } from "@mui/material";
+import { Box, Chip } from "@mui/material";
 import { useInstantSearch } from "react-instantsearch";
 
 const SearchHitClips = function (props: {
@@ -29,12 +29,12 @@ const SearchHitClips = function (props: {
   }
 
   return (
-    <Stack direction="row" spacing={1}>
+    <Box className="w-full flex flex-row flex-wrap gap-2">
       {county && (
         <Chip
           label={county}
           size="small"
-          className="bg-amber-500"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
           onClick={() => refine(false, false, false)}
         />
       )}
@@ -42,7 +42,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={locality}
           size="small"
-          className="bg-amber-500"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
           onClick={() => refine(true, false, false)}
         />
       )}
@@ -50,7 +50,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={neighborhood}
           size="small"
-          className="bg-amber-500"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
           onClick={() => refine(true, true, false)}
         />
       )}
@@ -58,11 +58,11 @@ const SearchHitClips = function (props: {
         <Chip
           label={street}
           size="small"
-          className="bg-amber-500"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
           onClick={() => refine(true, true, true)}
         />
       )}
-    </Stack>
+    </Box>
   );
 };
 
