@@ -49,7 +49,7 @@ const SearchBar = function (): JSX.Element {
         anchor="right"
         open={showFilters}
         onClose={() => setShowFilters(false)}
-        PaperProps={{ sx: { width: "33%" } }}
+        PaperProps={{ sx: { width: { sm: "100%", md: "30%" } } }}
       >
         <SearchFilters close={closeFilters} clear={clearFilters} />
       </Drawer>
