@@ -11,9 +11,9 @@ const EmptyHits = function (): JSX.Element {
 
   if (!animationData) return <div>Loading...</div>;
   return (
-    <Box className="flex flex-col w-full h-full align-middle items-center gap-5">
+    <Box className="flex flex-col w-full h-full align-middle items-center justify-center gap-5">
       <Lottie animationData={animationData} loop play />
-      <Typography className="text-gray-500" variant="body2" fontSize="small">
+      <Typography className="text-gray-500" variant="body2" fontSize="medium">
         No results found
       </Typography>
     </Box>

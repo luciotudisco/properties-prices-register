@@ -19,7 +19,7 @@ const SearchFilters = function (props: {
   const { nbHits } = useStats();
 
   return (
-    <Box className="flex flex-col gap-2 p-2 bg-gray-100">
+    <Box className="flex flex-col h-full gap-2 p-2 bg-gray-100">
       <Box className="flex flex-row gap-2 pl-2 pr-2 items-center">
         <Typography
           variant="h6"
