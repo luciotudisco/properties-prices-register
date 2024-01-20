@@ -101,4 +101,4 @@ curl --location --request GET 'https://api.irishpropertiesprices.com/v1/properti
 
 ## UI
 
-An Algolia-backed demo UI with the available data can be found [here](https://dashboard.algolia.com/interface-demos/dc3c78f1-ee11-41da-a0bc-2d41a464064f?utm_medium=page_link&utm_source=dashboard)
+An algolia-backed UI with the available data can be found at [https://irishpropertiesprices.com/](https://irishpropertiesprices.com/)
