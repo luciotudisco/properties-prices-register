@@ -14,7 +14,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
           {hit.raw_address}
         </Typography>
         <Typography className="text-gray-500" variant="h5" fontSize="small">
-          {hit.description}
+          {hit.property_type}
         </Typography>
       </Grid>
       <Grid
