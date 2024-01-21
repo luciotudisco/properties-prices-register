@@ -34,7 +34,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={county}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(false, false, false)}
         />
       )}
@@ -42,7 +42,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={locality}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, false, false)}
         />
       )}
@@ -50,7 +50,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={neighborhood}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, true, false)}
         />
       )}
@@ -58,7 +58,7 @@ const SearchHitClips = function (props: {
         <Chip
           label={street}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white"
+          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, true, true)}
         />
       )}

@@ -103,10 +103,9 @@ class Property(models.Model):
         if self.property_type == PropertyType.NEW_BUILD:
             price_with_vat = (Decimal(self.price) * Decimal("1.135")).quantize(Decimal("1"))
             price_thousands_reminder = price_with_vat % 1000
-            price_rounding_amount = 1000 - price_thousands_reminder if price_thousands_reminder != 0 else 0
-            if price_thousands_reminder <= 5:
-                return str(price_with_vat - price_rounding_amount)
+            if price_thousands_reminder != 0 and price_thousands_reminder <= 5:
+                return str(price_with_vat - price_thousands_reminder)
             elif price_thousands_reminder >= 995:
-                return str(price_with_vat + price_rounding_amount)
+                return str(price_with_vat + (1000 - price_thousands_reminder))
             return str(price_with_vat)
         return self.price
