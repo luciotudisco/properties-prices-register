@@ -48,7 +48,7 @@ def reindex_properties(algolia_app_id: str, algolia_api_key: str, algolia_ndex_n
                     "longitude": property.get("longitude"),
                     "neighborhood": property.get("neighborhood"),
                     "postal_code": property.get("postal_code"),
-                    "price": float(property.get("price")),
+                    "price": float(property.get("full_price")),
                     "raw_address": property.get("raw_address"),
                     "region": property.get("region"),
                     "sale_date": time.mktime(sale_date.timetuple()),

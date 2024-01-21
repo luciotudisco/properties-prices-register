@@ -9,7 +9,7 @@ from rest_framework.test import APIClient
 from rest_framework.test import APIRequestFactory
 
 
-class PropertiesListViewTests(TestCase):
+class ViewsTestCase(TestCase):
     def setUp(self) -> None:
         self.factory = APIRequestFactory()
         self.client = APIClient()

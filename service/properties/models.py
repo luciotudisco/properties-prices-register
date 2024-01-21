@@ -1,4 +1,5 @@
 import uuid
+from decimal import Decimal
 
 from django.db import models
 
@@ -36,6 +37,16 @@ class County(models.TextChoices):
     WICKLOW = "Wicklow"
 
 
+class PropertyType(models.TextChoices):
+    """
+    Types of properties.
+    """
+
+    NEW_BUILD = "New Build"
+    SECOND_HAND = "Second Hand"
+    OTHER = "Other"
+
+
 class Property(models.Model):
     """
     Represents a sold property with various attributes.
@@ -61,3 +72,34 @@ class Property(models.Model):
     sale_date = models.DateField()
     street = models.CharField(max_length=100, null=True, blank=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    @property
+    def property_type(self):
+        """
+        Determines the type of the property based on its description.
+
+        Returns:
+            PropertyType: The type of the property.
+        """
+        description_lower = self.description.lower() if self.description else None
+        if description_lower in ["new dwelling house /apartment", "teach/árasán cónaithe nua"]:
+            return PropertyType.NEW_BUILD
+        elif description_lower in ["second-hand dwelling house /apartment", "teach/árasán cónaithe atháimhe"]:
+            return PropertyType.SECOND_HAND
+        else:
+            return PropertyType.OTHER
+
+    @property
+    def full_price(self) -> str:
+        """
+        Calculates the full price of the property.
+
+        If the property type is NEW_BUILD, the price is multiplied by 1.135 to include 13.5% VAT.
+        Otherwise, the original price is returned.
+
+        Returns:
+            str: the full price of the property.
+        """
+        if self.property_type == PropertyType.NEW_BUILD:
+            return str((Decimal(self.price) * Decimal("1.135")).quantize(Decimal(".01")))
+        return self.price

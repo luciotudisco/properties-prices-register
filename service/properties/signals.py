@@ -1,4 +1,5 @@
 import logging
+import time
 from typing import Type
 
 from algoliasearch.search_client import SearchClient
@@ -33,8 +34,10 @@ def on_property_post_save(sender: Type[Property], instance: Property, created: b
             "price": instance.price,
             "raw_address": instance.raw_address,
             "region": instance.region,
-            "sale_date": instance.sale_date.strftime("%x"),
+            "sale_date": time.mktime(instance.sale_date.timetuple()),
+            "sale_year": instance.sale_date.year,
             "street": instance.street,
+            "property_type": instance.property_type.value,
         }
         algolia_properties_index.save_object(algolia_object)
     except Exception:

@@ -1,3 +1,4 @@
+import time
 import uuid
 from datetime import datetime
 from unittest import mock
@@ -7,7 +8,7 @@ from properties.models import Property
 from properties.signals import on_property_post_save
 
 
-class UtilsTestCase(TestCase):
+class SignalsTestCase(TestCase):
     @mock.patch("properties.signals.algolia_properties_index.save_object")
     def test_on_property_post_save(self, mock_save_object):
         property = Property(
@@ -45,10 +46,12 @@ class UtilsTestCase(TestCase):
                 "longitude": property.longitude,
                 "neighborhood": property.neighborhood,
                 "postal_code": property.postal_code,
-                "price": property.price,
+                "price": property.full_price,
                 "raw_address": property.raw_address,
                 "region": property.region,
-                "sale_date": property.sale_date.strftime("%x"),
+                "sale_date": time.mktime(property.sale_date.timetuple()),
+                "sale_year": property.sale_date.year,
                 "street": property.street,
+                "property_type": "Other",
             }
         )
