@@ -31,7 +31,7 @@ def on_property_post_save(sender: Type[Property], instance: Property, created: b
             "longitude": instance.longitude,
             "neighborhood": instance.neighborhood,
             "postal_code": instance.postal_code,
-            "price": instance.price,
+            "price": instance.full_price,
             "raw_address": instance.raw_address,
             "region": instance.region,
             "sale_date": time.mktime(instance.sale_date.timetuple()),
