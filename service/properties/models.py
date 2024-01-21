@@ -1,4 +1,5 @@
 import uuid
+from decimal import ROUND_UP
 from decimal import Decimal
 
 from django.db import models
@@ -101,5 +102,5 @@ class Property(models.Model):
             str: the full price of the property.
         """
         if self.property_type == PropertyType.NEW_BUILD:
-            return str((Decimal(self.price) * Decimal("1.135")).quantize(Decimal(".01")))
+            return str((Decimal(self.price) * Decimal("1.135")).quantize(Decimal("1"), ROUND_UP))
         return self.price

@@ -45,25 +45,19 @@ class ModelsTestCase(TestCase):
             id=uuid.uuid4(),
             county="foo_bar_county",
             description="Second-Hand Dwelling house /Apartment",
-            price="458149.78",
+            price="415000",
             raw_address="foo_bar_raw_address",
             sale_date=datetime.now().date(),
         )
-        self.assertEqual(
-            property.full_price,
-            "458149.78",
-        )
+        self.assertEqual(property.full_price, "415000")
 
     def test_property_vat_inclusive_price_new_build(self):
         property = Property(
             id=uuid.uuid4(),
             county="foo_bar_county",
             description="New Dwelling house /Apartment",
-            price="458149.78",
+            price="365638.00",
             raw_address="foo_bar_raw_address",
             sale_date=datetime.now().date(),
         )
-        self.assertEqual(
-            property.full_price,
-            "520000.00",
-        )
+        self.assertEqual(property.full_price, "415000")

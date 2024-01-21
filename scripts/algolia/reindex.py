@@ -27,7 +27,7 @@ def reindex_properties(algolia_app_id: str, algolia_api_key: str, algolia_ndex_n
     url = "https://api.irishpropertiesprices.com/v1/properties/"
     num_properties = 0
     while True:
-        response = requests.get(url=url, timeout=30)
+        response = requests.get(url=url, params={"limit": 1000}, timeout=30)
         response.raise_for_status()
         json_response = response.json()
         properties = json_response["results"]
