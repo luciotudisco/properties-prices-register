@@ -12,6 +12,24 @@ data obtained from the Residential Property Price Register is enhanced with
 additional details obtained through the third-party geocode
 API [True Way Api](https://truewayapi.com/).
 
+## Packages
+
+The project include the following packages:
+
+- **infrastructure**: The package contains the CDK code used to deploy the
+  service on AWS. The service consists of a Django backend and a NextJS
+  frontend, both running on ECS Fargate.
+
+- **portal**: The package contains the NextJS frontend with a UI backed by
+  Algolia, which displays the available data.
+
+- **scripts**: The package contains a range of operational scripts for managing
+  the service effectively.
+
+- **service**: The package contains the Django backend service that exposes the
+  REST API. The service also includes the Celery workers, which are responsible
+  for periodically fetching and updating the list of properties.
+
 ## API
 
 ### Properties List

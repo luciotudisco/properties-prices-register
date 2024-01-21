@@ -1,5 +1,4 @@
 import uuid
-from decimal import ROUND_UP
 from decimal import Decimal
 
 from django.db import models
@@ -91,7 +90,7 @@ class Property(models.Model):
             return PropertyType.OTHER
 
     @property
-    def full_price(self) -> str:
+    def full_price(self):
         """
         Calculates the full price of the property.
 
@@ -102,5 +101,12 @@ class Property(models.Model):
             str: the full price of the property.
         """
         if self.property_type == PropertyType.NEW_BUILD:
-            return str((Decimal(self.price) * Decimal("1.135")).quantize(Decimal("1"), ROUND_UP))
+            price_with_vat = (Decimal(self.price) * Decimal("1.135")).quantize(Decimal("1"))
+            price_thousands_reminder = price_with_vat % 1000
+            price_rounding_amount = 1000 - price_thousands_reminder
+            if price_thousands_reminder <= 5:
+                return str(price_with_vat - price_rounding_amount)
+            elif price_thousands_reminder >= 995:
+                return str(price_with_vat + price_rounding_amount)
+            return str(price_with_vat)
         return self.price
