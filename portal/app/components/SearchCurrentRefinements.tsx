@@ -15,7 +15,7 @@ const SearchCurrentRefinements = function (): JSX.Element {
                 refinement.label
               }`}
               size="medium"
-              className="text-md p-5 font-thin"
+              className="text-md p-2 md:p-5 font-thin"
               deleteIcon={<HighlightOffIcon />}
               onDelete={() => refine(refinement)}
             />

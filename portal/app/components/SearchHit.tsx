@@ -1,9 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Grid, Typography } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import Moment from "moment";
 import SearchHitClips from "./SearchHitClips";
+import AddLocationAltTwoToneIcon from "@mui/icons-material/AddLocationAltTwoTone";
+import Link from "next/link";
 
 const SearchHit = function (props: { hit: any }): JSX.Element {
   const { hit } = props;
@@ -16,6 +18,22 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
         <Typography className="text-gray-500" variant="h5" fontSize="small">
           {hit.property_type}
         </Typography>
+        {hit.location_type == "exact" && (
+          <Link
+            href={`http://maps.google.com/maps?z=12&t=m&q=loc:${hit.latitude}+${hit.longitude}`}
+            target="_blank"
+          >
+            <Button
+              aria-label="Open Google Maps Link"
+              size="small"
+              className="text-xs p-0 font-extralight"
+              startIcon={<AddLocationAltTwoToneIcon />}
+              variant="text"
+            >
+              Find on Google Maps
+            </Button>
+          </Link>
+        )}
       </Grid>
       <Grid
         item
@@ -35,12 +53,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
         </Typography>
       </Grid>
       <Grid item xs={12}>
-        <SearchHitClips
-          county={hit.county}
-          locality={hit.locality}
-          neighborhood={hit.neighborhood}
-          street={hit.street}
-        />
+        <SearchHitClips hit={hit} />
       </Grid>
     </Grid>
   );

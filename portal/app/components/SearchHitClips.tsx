@@ -1,13 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { Box, Chip } from "@mui/material";
 import { useInstantSearch } from "react-instantsearch";
 
-const SearchHitClips = function (props: {
-  county: string;
-  locality?: string;
-  neighborhood?: string;
-  street?: string;
-}): JSX.Element {
-  const { county, locality, neighborhood, street } = props;
+const SearchHitClips = function (props: { hit: any }): JSX.Element {
+  const { hit } = props;
   const { setIndexUiState } = useInstantSearch();
 
   function refine(
@@ -20,43 +17,44 @@ const SearchHitClips = function (props: {
       query: "",
       refinementList: {
         ...prevIndexUiState.refinementList,
-        county: [county],
-        locality: includeLocality && locality ? [locality] : [],
-        neighborhood: includeNeighborhood && neighborhood ? [neighborhood] : [],
-        street: includeStreet && street ? [street] : [],
+        county: [hit.county],
+        locality: includeLocality && hit.locality ? [hit.locality] : [],
+        neighborhood:
+          includeNeighborhood && hit.neighborhood ? [hit.neighborhood] : [],
+        street: includeStreet && hit.street ? [hit.street] : [],
       },
     }));
   }
 
   return (
-    <Box className="w-full flex flex-row flex-wrap gap-2">
-      {county && (
+    <Box className="w-full flex flex-row flex-wrap gap-2 items-center">
+      {hit.county && (
         <Chip
-          label={county}
+          label={hit.county}
           size="small"
           className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(false, false, false)}
         />
       )}
-      {locality && (
+      {hit.locality && (
         <Chip
-          label={locality}
+          label={hit.locality}
           size="small"
           className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, false, false)}
         />
       )}
-      {neighborhood && neighborhood !== locality && (
+      {hit.neighborhood && hit.neighborhood !== hit.locality && (
         <Chip
-          label={neighborhood}
+          label={hit.neighborhood}
           size="small"
           className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, true, false)}
         />
       )}
-      {street && (
+      {hit.street && (
         <Chip
-          label={street}
+          label={hit.street}
           size="small"
           className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
           onClick={() => refine(true, true, true)}
