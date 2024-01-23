@@ -8,23 +8,23 @@ from rest_framework import generics
 
 class PropertiesListView(generics.ListAPIView):
     filterset_fields = {
-        "county": ["exact"],
-        "locality": ["exact"],
-        "neighborhood": ["exact"],
+        "county": ["exact", "in"],
+        "locality": ["exact", "in"],
+        "neighborhood": ["exact", "in"],
+        "street": ["exact", "in"],
         "price": ["gte", "lte"],
         "sale_date": ["gte", "lte"],
     }
     filter_backends = [DjangoFilterBackend]
-    http_method_names = ["get"]
     queryset = Property.objects.all()
     serializer_class = PropertySerializer
 
 
 class PropertiesStatsView(AggregationViewSet):
     filterset_fields = {
-        "county": ["exact"],
-        "locality": ["exact"],
-        "neighborhood": ["exact"],
+        "county": ["exact", "in"],
+        "locality": ["exact", "in"],
+        "street": ["exact", "in"],
         "price": ["gte", "lte"],
         "sale_date": ["gte", "lte"],
     }
