@@ -102,8 +102,8 @@ const SearchGraph = function (): JSX.Element {
     );
 
   return (
-    <Grid container className="h-full w-full" spacing={20}>
-      <Grid item xs={12} className=" w-full h-full">
+    <Grid container className="h-full w-full" spacing={5}>
+      <Grid item xs={12} className="w-full h-full">
         <Typography className="font-mono py-10 font-bold">
           Median price by year
         </Typography>
