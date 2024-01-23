@@ -2,7 +2,14 @@
 
 import { useCurrentRefinements } from "react-instantsearch";
 import { useEffect, useState } from "react";
-import { Box, CircularProgress, Grid, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Grid,
+  MenuItem,
+  Select,
+  Typography,
+} from "@mui/material";
 import {
   LineChart,
   Line,
@@ -13,86 +20,74 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import moment from "moment";
+import StatsService from "../services/stats.service";
+import {
+  AggregationType,
+  AggregationPeriod,
+  StatsRecord,
+} from "../types/services";
+
+const statsService = new StatsService();
 
 const SearchGraph = function (): JSX.Element {
   const { items } = useCurrentRefinements();
-  const [pricesStats, setPricesStats] = useState([]);
-  const [countStats, setCountStats] = useState([]);
+  const [aggregation, setAggregation] = useState<AggregationPeriod>(
+    AggregationPeriod.YEAR,
+  );
+  const [pricesStats, setPricesStats] = useState<StatsRecord[]>([]);
+  const [countStats, setCountStats] = useState<StatsRecord[]>([]);
   const [isLoading, setLoading] = useState(true);
-
-  const fetchStats = async (
-    aggregation: { [key: string]: string },
-    counties: string[],
-    localities: string[],
-    neighborhoods: string[],
-    sreets: string[],
-  ) => {
-    const url = new URL(
-      "https://api.irishpropertiesprices.com/v1/properties/stats",
-    );
-    const params: { [key: string]: string } = {
-      ...aggregation,
-      truncateDate: "sale_date=year",
-      groupBy: "sale_date__trunc__year",
-      county__in: counties.join(","),
-      locality__in: localities.join(","),
-      neighborhood__in: neighborhoods.join(","),
-      street__in: sreets.join(","),
-      orderBy: "sale_date__trunc__year",
-    };
-    Object.keys(params).forEach((key) =>
-      url.searchParams.append(key, params[key]),
-    );
-    const response = await fetch(url);
-    const data = response.json();
-    return data;
-  };
-
-  const extractRefinementsValues = (items: any[], attribute: string) => {
-    return (
-      items
-        .find((item) => item.attribute == attribute)
-        ?.refinements.map((refinement: any) => refinement.value as string) || []
-    );
-  };
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
-      setLoading(true);
-      const counties = extractRefinementsValues(items, "county");
-      const localities = extractRefinementsValues(items, "locality");
-      const neighborhoods = extractRefinementsValues(items, "neighborhood");
-      const streets = extractRefinementsValues(items, "street");
+      const counties = getRefinements(items, "county");
+      const localities = getRefinements(items, "locality");
+      const neighborhoods = getRefinements(items, "neighborhood");
+      const streets = getRefinements(items, "street");
 
-      const medianPricesAggregation = {
-        aggregation: "percentile",
-        aggregationField: "price",
-        percentile: "0.5",
-      };
-      const pricesData = await fetchStats(
-        medianPricesAggregation,
+      const pricesData = await statsService.getStats({
+        aggregation: AggregationType.MEDIAN_PRICE,
         counties,
         localities,
         neighborhoods,
         streets,
-      );
-      setPricesStats(pricesData);
+        period: aggregation,
+      });
+      setPricesStats(pricesData.data);
 
-      const countAggregation = { aggregation: "count" };
-      const countsData = await fetchStats(
-        countAggregation,
+      const countsData = await statsService.getStats({
+        aggregation: AggregationType.COUNT,
         counties,
         localities,
         neighborhoods,
         streets,
-      );
-      setCountStats(countsData);
-
-      setLoading(false);
+        period: aggregation,
+      });
+      setCountStats(countsData.data);
     };
 
-    fetchData();
-  }, [items]);
+    const getRefinements = (items: any, attribute: string) => {
+      const item = items.find((item: any) => item.attribute == attribute);
+      if (!item) {
+        return [];
+      }
+      return item.refinements.map((refinement: any) => refinement.value) || [];
+    };
+
+    try {
+      if (isLoading) {
+        return;
+      }
+      setHasError(false);
+      setLoading(true);
+      fetchData();
+    } catch (error) {
+      setHasError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, [items, aggregation]);
 
   if (isLoading)
     return (
@@ -101,11 +96,41 @@ const SearchGraph = function (): JSX.Element {
       </Box>
     );
 
+  if (hasError)
+    return (
+      <Box className="flex h-full w-full items-center align-middle justify-center">
+        <Typography fontSize="medium" variant="body2">
+          Oops! Something went wrong!
+        </Typography>
+      </Box>
+    );
+
   return (
-    <Grid container className="h-full w-full" spacing={5}>
-      <Grid item xs={12} className="w-full h-full">
-        <Typography className="font-mono py-10 font-bold">
-          Median price by year
+    <Grid container className="h-full w-full p-5">
+      <Grid
+        item
+        xs={12}
+        className="w-full flex justify-center align-middle items-center"
+      >
+        <Select
+          value={aggregation}
+          defaultValue={AggregationPeriod.YEAR}
+          onChange={(event) =>
+            setAggregation(event.target.value as AggregationPeriod)
+          }
+          disabled={isLoading}
+          variant="outlined"
+          label="Time aggregation"
+          className="w-min-60"
+          size="small"
+        >
+          <MenuItem value={AggregationPeriod.YEAR}>Yearly</MenuItem>
+          <MenuItem value={AggregationPeriod.MONTH}>Monthly</MenuItem>
+        </Select>
+      </Grid>
+      <Grid item xs={12} className="w-full h-full pb-10 max-h-96">
+        <Typography className="font-mono py-10 font-bold text-sm" variant="h2">
+          Median price
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -115,28 +140,21 @@ const SearchGraph = function (): JSX.Element {
             margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="sale_date__trunc__year"
-              tickFormatter={(tick) =>
-                moment(tick, "YYYY-MM-DD").format("YYYY")
-              }
-            />
+            <XAxis dataKey="time" />
             <YAxis
               dataKey="value"
-              tickFormatter={(value) =>
-                new Intl.NumberFormat("en", { notation: "compact" }).format(
-                  value,
-                )
+              tickFormatter={(v) =>
+                new Intl.NumberFormat("en", { notation: "compact" }).format(v)
               }
             />
-            <Tooltip />
             <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            <Tooltip />
           </LineChart>
         </ResponsiveContainer>
       </Grid>
-      <Grid item xs={12} className=" w-full h-full">
-        <Typography className="font-mono py-10 font-bold">
-          Number of properties sold by year
+      <Grid item xs={12} className=" w-full h-full pt-10 max-h-96">
+        <Typography className="font-mono py-10 font-bold  text-sm" variant="h2">
+          Number of properties sold
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -147,19 +165,21 @@ const SearchGraph = function (): JSX.Element {
           >
             <CartesianGrid strokeDasharray="3 3" />
             <XAxis
-              dataKey="sale_date__trunc__year"
-              tickFormatter={(tick) =>
-                moment(tick, "YYYY-MM-DD").format("YYYY")
-              }
+              dataKey="time"
+              tickFormatter={(tick: Date) => moment(tick).format("YYYY")}
             />
             <YAxis
               dataKey="value"
-              tickFormatter={(value) =>
-                new Intl.NumberFormat("en").format(value)
+              tickFormatter={(v) =>
+                new Intl.NumberFormat("en", { notation: "compact" }).format(v)
               }
             />
-            <Tooltip />
             <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            <Tooltip
+              labelFormatter={(value) => {
+                return `label: ${value}`;
+              }}
+            />
           </LineChart>
         </ResponsiveContainer>
       </Grid>
