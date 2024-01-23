@@ -24,6 +24,7 @@ class PropertiesStatsView(AggregationViewSet):
     filterset_fields = {
         "county": ["exact", "in"],
         "locality": ["exact", "in"],
+        "neighborhood": ["exact", "in"],
         "street": ["exact", "in"],
         "price": ["gte", "lte"],
         "sale_date": ["gte", "lte"],

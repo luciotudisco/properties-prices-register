@@ -1,13 +1,30 @@
-import { Grid, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  Grid,
+  Stack,
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+} from "@mui/material";
 import { InfiniteHits, useInstantSearch, useStats } from "react-instantsearch";
 import SearchHit from "./SearchHit";
 import SearchBar from "./SearchBar";
 import EmptyHits from "./EmptyHits";
 import SearchCurrentRefinements from "./SearchCurrentRefinements";
+import SearchGraph from "./SearchGraph";
+import ListIcon from "@mui/icons-material/List";
+import BarChartIcon from "@mui/icons-material/BarChart";
+import { useState } from "react";
+
+enum SearchView {
+  LIST = "list",
+  GRAPH = "graph",
+}
 
 const Search = function (): JSX.Element {
   const { results } = useInstantSearch();
   const { nbHits } = useStats();
+  const [view, setView] = useState<SearchView>(SearchView.LIST);
 
   return (
     <Stack className="h-full w-full">
@@ -22,27 +39,49 @@ const Search = function (): JSX.Element {
           className="flex flex-col w-full h-full align-middle items-center gap-3"
         >
           <>
-            <SearchCurrentRefinements />
             {!results.__isArtificial && results.nbHits === 0 ? (
               <EmptyHits />
             ) : (
               <>
-                <Typography
-                  className="text-gray-400"
-                  variant="caption"
-                  fontSize="small"
-                >
-                  {nbHits} results found
-                </Typography>
-                <InfiniteHits
-                  classNames={{
-                    root: "SearchInfiniteHits",
-                    list: "SearchInfiniteHitsList",
-                    item: "SearchInfiniteHitsItem",
-                  }}
-                  hitComponent={SearchHit}
-                  showPrevious={false}
-                />
+                <Box className="flex flex-row-reverse w-full">
+                  <ToggleButtonGroup
+                    color="primary"
+                    exclusive
+                    value={view}
+                    defaultValue={SearchView.LIST}
+                    size="small"
+                    onChange={(_event, value) => setView(value)}
+                  >
+                    <ToggleButton value={SearchView.LIST}>
+                      <ListIcon />
+                    </ToggleButton>
+                    <ToggleButton value={SearchView.GRAPH}>
+                      <BarChartIcon />
+                    </ToggleButton>
+                  </ToggleButtonGroup>
+                </Box>
+                <SearchCurrentRefinements />
+                {view == SearchView.GRAPH && <SearchGraph />}
+                {view == SearchView.LIST && (
+                  <>
+                    <Typography
+                      className="text-gray-400"
+                      variant="caption"
+                      fontSize="small"
+                    >
+                      {nbHits} results found
+                    </Typography>
+                    <InfiniteHits
+                      classNames={{
+                        root: "SearchInfiniteHits",
+                        list: "SearchInfiniteHitsList",
+                        item: "SearchInfiniteHitsItem",
+                      }}
+                      hitComponent={SearchHit}
+                      showPrevious={false}
+                    />
+                  </>
+                )}
               </>
             )}
           </>
