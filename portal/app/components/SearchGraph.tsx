@@ -109,6 +109,7 @@ const SearchGraph = function (): JSX.Element {
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
+            syncId="yearly-charts"
             data={pricesStats}
             className="text-xs font-mono"
             margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
@@ -139,6 +140,7 @@ const SearchGraph = function (): JSX.Element {
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
+            syncId="yearly-charts"
             data={countStats}
             className="text-xs font-mono"
             margin={{ top: 5, right: 5, left: 5, bottom: 5 }}

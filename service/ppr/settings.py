@@ -33,6 +33,7 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", default="").split(" ")
 # Application definition
 
 INSTALLED_APPS = [
+    "corsheaders",
     "django_celery_results",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -200,6 +202,8 @@ GEOCODE_API_URL = "https://trueway-geocoding.p.rapidapi.com/Geocode"
 GEOCODE_API_HOST = "trueway-geocoding.p.rapidapi.com"
 
 PROPERTY_PRICE_REGISTER_BASE_URL = "https://www.propertypriceregister.ie/website/npsra/ppr/npsra-ppr.nsf"
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 sentry_sdk.init(
     dsn=SENTRY_DNS,
