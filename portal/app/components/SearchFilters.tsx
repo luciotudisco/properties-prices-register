@@ -58,7 +58,7 @@ const SearchFilters = function (props: {
       </Box>
       <Divider />
       {nbHits > 0 ? (
-        <Box className="flex h-full flex-col gap-5 px-5 my-5">
+        <Box className="flex h-full flex-col gap-5 p-5">
           <SearchFilter
             attribute="property_type"
             label="property type"

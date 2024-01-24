@@ -14,6 +14,7 @@ export interface StatsRequest {
   localities: string[];
   neighborhoods: string[];
   streets: string[];
+  sale_years: number[];
   period: AggregationPeriod;
 }
 
@@ -23,5 +24,5 @@ export interface StatsRecord {
 }
 
 export interface StatsReponse {
-  data: { value: number; time: string }[];
+  data: StatsRecord[];
 }

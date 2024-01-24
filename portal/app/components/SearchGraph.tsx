@@ -19,7 +19,6 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import moment from "moment";
 import StatsService from "../services/stats.service";
 import {
   AggregationType,
@@ -45,6 +44,7 @@ const SearchGraph = function (): JSX.Element {
       const localities = getRefinements(items, "locality");
       const neighborhoods = getRefinements(items, "neighborhood");
       const streets = getRefinements(items, "street");
+      const sale_years = getRefinements(items, "sale_year");
 
       const pricesData = await statsService.getStats({
         aggregation: AggregationType.MEDIAN_PRICE,
@@ -52,6 +52,7 @@ const SearchGraph = function (): JSX.Element {
         localities,
         neighborhoods,
         streets,
+        sale_years,
         period: aggregation,
       });
       setPricesStats(pricesData.data);
@@ -62,6 +63,7 @@ const SearchGraph = function (): JSX.Element {
         localities,
         neighborhoods,
         streets,
+        sale_years,
         period: aggregation,
       });
       setCountStats(countsData.data);
@@ -164,10 +166,7 @@ const SearchGraph = function (): JSX.Element {
             margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
           >
             <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="time"
-              tickFormatter={(tick: Date) => moment(tick).format("YYYY")}
-            />
+            <XAxis dataKey="time" />
             <YAxis
               dataKey="value"
               tickFormatter={(v) =>

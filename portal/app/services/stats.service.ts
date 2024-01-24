@@ -1,7 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import axios, { AxiosInstance } from "axios";
-import { AggregationType, StatsReponse, StatsRequest } from "../types/services";
+import {
+  AggregationPeriod,
+  AggregationType,
+  StatsReponse,
+  StatsRequest,
+} from "../types/services";
 import moment from "moment";
 
 /**
@@ -27,6 +32,14 @@ class StatsService {
   public async getStats(request: StatsRequest): Promise<StatsReponse> {
     try {
       const timeFieldName = `sale_date__trunc__${request.period}`;
+      const max_sale_year =
+        request.sale_years.length > 0
+          ? Math.max(...request.sale_years)
+          : new Date().getFullYear();
+      const min_sale_year =
+        request.sale_years.length > 0
+          ? Math.min(...request.sale_years)
+          : "2010";
       const params: { [key: string]: string } = {
         ...this.buildAggregationParms(request.aggregation),
         truncateDate: `sale_date=${request.period}`,
@@ -35,12 +48,16 @@ class StatsService {
         locality__in: request.localities.join(","),
         neighborhood__in: request.neighborhoods.join(","),
         street__in: request.streets.join(","),
+        sale_date__gte: `${min_sale_year}-01-01`,
+        sale_date__lte: `${max_sale_year}-12-31`,
         orderBy: timeFieldName,
       };
       const response = await this.http.get(this.baseURL, { params });
+      const timeFormat =
+        request.period === AggregationPeriod.YEAR ? "YYYY" : "YYYY-MM";
       const timeSeries = response.data.map((item: any) => {
         return {
-          time: moment(item[timeFieldName]).format("YYYY"),
+          time: moment(item[timeFieldName]).format(timeFormat),
           value: item.value,
         };
       });

@@ -6,3 +6,31 @@
 .SearchInfiniteHits {
   width: 100%;
 }
+
+.RefinementListLabelText {
+  font-size: 0.8rem;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.RefinementListCheckbox {
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  color: rgba(0, 0, 0, 0.12) !important;
+}
+
+.RefinementListCount {
+  border-radius: 16 !important;
+  font-family: monospace !important;
+}
+
+.RefinementListShowMore {
+  border: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
+.RefinementListShowMore:hover {
+  font-weight: 500 !important;
+}
