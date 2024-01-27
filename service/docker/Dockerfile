@@ -10,20 +10,8 @@ ENV PYTHONUNBUFFERED 1
 ENV PYCURL_SSL_LIBRARY=openssl
 
 RUN apt-get update \
-    && apt-get install -y gcc \
-    build-essential \
-    curl-dev \
-    gunicorn \
-    libcurl \
-    libcurl4-openssl-dev \
-    libffi-dev \
-    libmagic1 \
-    libpq-dev \
-    libressl-dev \
-    libssl-dev \
-    musl-dev \
-    netcat-traditional \
-    python3-dev
+    && apt-get install -y gcc gunicorn python3-dev musl-dev libmagic1 libffi-dev netcat-traditional \
+    build-essential libpq-dev libcurl4-openssl-dev libssl-dev
 
 COPY poetry.lock pyproject.toml /app/
 RUN pip3 install poetry
