@@ -7,10 +7,20 @@ WORKDIR /app
 # Set env variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+ENV PYCURL_SSL_LIBRARY=openssl
 
 RUN apt-get update \
-    && apt-get install -y gcc gunicorn python3-dev musl-dev libmagic1 libffi-dev netcat-traditional \
-    build-essential libpq-dev libcurl4-openssl-dev libssl-dev
+    && apt-get install -y gcc \
+    build-essential \
+    gunicorn \
+    libcurl4-openssl-dev \
+    libffi-dev \
+    libmagic1 \
+    libpq-dev \
+    libssl-dev \
+    musl-dev \
+    netcat-traditional \
+    python3-dev
 
 COPY poetry.lock pyproject.toml /app/
 RUN pip3 install poetry
