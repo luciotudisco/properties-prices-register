@@ -12,11 +12,14 @@ ENV PYCURL_SSL_LIBRARY=openssl
 RUN apt-get update \
     && apt-get install -y gcc \
     build-essential \
+    curl-dev \
     gunicorn \
+    libcurl \
     libcurl4-openssl-dev \
     libffi-dev \
     libmagic1 \
     libpq-dev \
+    libressl-dev \
     libssl-dev \
     musl-dev \
     netcat-traditional \
