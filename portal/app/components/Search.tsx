@@ -10,16 +10,12 @@ import { InfiniteHits, useInstantSearch, useStats } from "react-instantsearch";
 import SearchHit from "./SearchHit";
 import SearchBar from "./SearchBar";
 import EmptyHits from "./EmptyHits";
-import SearchCurrentRefinements from "./SearchCurrentRefinements";
+import SearchCurrentRefinements from "./CurrentRefinements";
 import SearchGraph from "./SearchGraph";
 import ListIcon from "@mui/icons-material/List";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import { useState } from "react";
-
-enum SearchView {
-  LIST = "list",
-  GRAPH = "graph",
-}
+import { SearchView } from "../types/models";
 
 const Search = function (): JSX.Element {
   const { results } = useInstantSearch();
@@ -27,23 +23,23 @@ const Search = function (): JSX.Element {
   const [view, setView] = useState<SearchView>(SearchView.LIST);
 
   return (
-    <Stack className="h-full w-full">
+    <Stack className="h-full w-full gap-5 pt-5">
       <SearchBar />
-      <Grid container className="flex w-full h-full p-5 overflow-y-auto">
+      <Grid container className="flex w-full h-full overflow-y-auto">
         <Grid item sm={0} md={0} lg={2} />
         <Grid
           item
           sm={12}
           md={12}
           lg={8}
-          className="flex flex-col w-full h-full align-middle items-center gap-3"
+          className="flex flex-col w-full h-full align-middle items-center"
         >
           <>
             {!results.__isArtificial && results.nbHits === 0 ? (
               <EmptyHits />
             ) : (
               <>
-                <Box className="flex flex-row-reverse w-full">
+                <Box className="flex w-full flex-row-reverse">
                   <ToggleButtonGroup
                     color="primary"
                     exclusive
@@ -76,6 +72,7 @@ const Search = function (): JSX.Element {
                         root: "SearchInfiniteHits",
                         list: "SearchInfiniteHitsList",
                         item: "SearchInfiniteHitsItem",
+                        loadMore: "SearchInfiniteLoadMore",
                       }}
                       hitComponent={SearchHit}
                       showPrevious={false}

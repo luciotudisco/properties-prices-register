@@ -6,16 +6,14 @@ const SearchCurrentRefinements = function (): JSX.Element {
   const { items, refine } = useCurrentRefinements();
 
   return (
-    <Box className="flex flex-row flex-wrap gap-2 justify-center">
+    <Box className="flex flex-row flex-wrap gap-2 p-5 justify-center">
       {items.map((item) => (
-        <Box className="flex flex-row flex-wrap gap-2">
+        <Box className="flex flex-row flex-wrap">
           {item.refinements.map((refinement) => (
             <Chip
-              label={`${refinement.attribute.toUpperCase()}: ${
-                refinement.label
-              }`}
-              size="medium"
-              className="text-md p-2 md:p-5 font-thin"
+              label={refinement.label}
+              size="small"
+              className="p-2 md:p-4 font-thin font-mono bg-amber-500 hover:bg-amber-600 hover:text-white"
               deleteIcon={<HighlightOffIcon />}
               onDelete={() => refine(refinement)}
             />

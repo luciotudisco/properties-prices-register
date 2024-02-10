@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Footer from "./components/Footer";
 import Header from "./components/Header";
 
 export const metadata: Metadata = {
@@ -20,9 +19,6 @@ export default function RootLayout({
           <Header />
         </nav>
         <main className="flex-1 overflow-y-auto">{children}</main>
-        <footer className="h-10 w-full">
-          <Footer />
-        </footer>
       </body>
     </html>
   );

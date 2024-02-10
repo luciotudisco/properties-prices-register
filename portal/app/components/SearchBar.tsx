@@ -1,4 +1,4 @@
-import { Badge, Box, Button, Drawer, IconButton } from "@mui/material";
+import { Badge, Box, Button, Drawer, Grid, IconButton } from "@mui/material";
 import {
   SearchBox,
   useCurrentRefinements,
@@ -9,7 +9,6 @@ import "instantsearch.css/themes/satellite.css";
 import { useState } from "react";
 import SearchFilters from "./SearchFilters";
 import TuneIcon from "@mui/icons-material/Tune";
-import ClearIcon from "@mui/icons-material/Clear";
 
 const SearchBar = function (): JSX.Element {
   const [showFilters, setShowFilters] = useState<boolean>(false);
@@ -39,45 +38,46 @@ const SearchBar = function (): JSX.Element {
   }
 
   return (
-    <Box className="flex flex-row w-full border-b-2 p-5 gap-2 bg-emerald-950 items-center">
-      <SearchBox className="w-full" placeholder="Search property" />
-      <Badge badgeContent={items.length} color="error">
-        <Button
-          onClick={() => openFilters()}
-          className="text-white hidden md:block"
-        >
-          Filters
-        </Button>
-        <IconButton
-          onClick={() => openFilters()}
-          className="text-white block md:hidden"
-          aria-label="Open Filters"
-        >
-          <TuneIcon />
-        </IconButton>
-      </Badge>
-      <Button
-        onClick={() => clearFilters()}
-        className="text-white hidden md:block"
-      >
-        Clear
-      </Button>
-      <IconButton
-        onClick={() => clearFilters()}
-        className="text-white block md:hidden"
-        aria-label="Clear Filters"
-      >
-        <ClearIcon />
-      </IconButton>
-      <Drawer
-        anchor="right"
-        open={showFilters}
-        onClose={() => setShowFilters(false)}
-        PaperProps={{ sx: { width: { sm: "100%", md: "30%" } } }}
-      >
-        <SearchFilters close={closeFilters} clear={clearFilters} />
-      </Drawer>
-    </Box>
+    <Grid container className="flex w-full">
+      <Grid item sm={0} md={0} lg={2} />
+      <Grid item sm={12} md={12} lg={8}>
+        <Box className="flex flex-row w-full gap-2 items-center">
+          <SearchBox
+            className="w-full"
+            placeholder="Search property"
+            classNames={{
+              root: "SearchBox",
+              input: "SearchBoxInput",
+            }}
+          />
+          <Badge badgeContent={items.length} color="info" className="font-mono">
+            <Button
+              variant="outlined"
+              onClick={() => openFilters()}
+              className="hidden md:block font-mono"
+            >
+              Filters
+            </Button>
+            <IconButton
+              onClick={() => openFilters()}
+              className="block md:hidden"
+              aria-label="Open Filters"
+            >
+              <TuneIcon />
+            </IconButton>
+          </Badge>
+          <Drawer
+            anchor="right"
+            open={showFilters}
+            onClose={() => setShowFilters(false)}
+            PaperProps={{ sx: { width: { sm: "100%", md: "30%" } } }}
+          >
+            <SearchFilters close={closeFilters} clear={clearFilters} />
+          </Drawer>
+        </Box>
+      </Grid>
+      <Grid item sm={0} md={0} lg={2} />
+    </Grid>
   );
 };
 

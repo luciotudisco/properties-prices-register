@@ -20,7 +20,7 @@ const SearchFilters = function (props: {
   const { nbHits } = useStats();
 
   return (
-    <Box className="flex flex-col h-full gap-2 p-2">
+    <Box className="flex flex-col gap-2 p-2 bg-gray-50">
       <Box className="flex flex-row gap-2 pl-2 pr-2 items-center">
         <Typography
           variant="h6"
@@ -45,7 +45,7 @@ const SearchFilters = function (props: {
         >
           Clear
         </Button>
-        <Badge badgeContent={nbHits} color="error" max={99999} showZero>
+        <Badge badgeContent={nbHits} color="info" max={99999} showZero>
           <Button
             size="small"
             variant="outlined"

@@ -108,11 +108,11 @@ const SearchGraph = function (): JSX.Element {
     );
 
   return (
-    <Grid container className="h-full w-full p-5">
+    <Grid container className="h-full w-full">
       <Grid
         item
         xs={12}
-        className="w-full flex justify-center align-middle items-center"
+        className="w-full flex flex-row-reverse justify-center align-middle items-center"
       >
         <Select
           value={aggregation}
@@ -123,7 +123,7 @@ const SearchGraph = function (): JSX.Element {
           disabled={isLoading}
           variant="outlined"
           label="Time aggregation"
-          className="w-min-60"
+          className="w-min-60 font-mono"
           size="small"
         >
           <MenuItem value={AggregationPeriod.YEAR}>Yearly</MenuItem>
@@ -131,7 +131,10 @@ const SearchGraph = function (): JSX.Element {
         </Select>
       </Grid>
       <Grid item xs={12} className="w-full h-full pb-10 max-h-96">
-        <Typography className="font-mono py-10 font-bold text-sm" variant="h2">
+        <Typography
+          className="font-mono py-2 font-bold text-sm uppercase"
+          variant="h2"
+        >
           Median price
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
@@ -149,13 +152,16 @@ const SearchGraph = function (): JSX.Element {
                 new Intl.NumberFormat("en", { notation: "compact" }).format(v)
               }
             />
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            <Line type="monotone" dataKey="value" stroke="#06d6a0" />
             <Tooltip />
           </LineChart>
         </ResponsiveContainer>
       </Grid>
       <Grid item xs={12} className=" w-full h-full pt-10 max-h-96">
-        <Typography className="font-mono py-10 font-bold  text-sm" variant="h2">
+        <Typography
+          className="font-mono py-2 font-bold text-sm uppercase"
+          variant="h2"
+        >
           Number of properties sold
         </Typography>
         <ResponsiveContainer width="100%" height="100%">
@@ -173,7 +179,7 @@ const SearchGraph = function (): JSX.Element {
                 new Intl.NumberFormat("en", { notation: "compact" }).format(v)
               }
             />
-            <Line type="monotone" dataKey="value" stroke="#8884d8" />
+            <Line type="monotone" dataKey="value" stroke="#ef476f" />
             <Tooltip
               labelFormatter={(value) => {
                 return `label: ${value}`;

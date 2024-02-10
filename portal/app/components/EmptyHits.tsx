@@ -9,11 +9,14 @@ const EmptyHits = function (): JSX.Element {
     import("./assets/no-results-lottie.json").then(setAnimationData);
   }, []);
 
-  if (!animationData) return <div>Loading...</div>;
   return (
     <Box className="flex flex-col w-full h-full align-middle items-center justify-center gap-5">
       <Lottie animationData={animationData} loop play />
-      <Typography className="text-gray-500" variant="body2" fontSize="medium">
+      <Typography
+        className="text-gray-500 font-mono"
+        variant="body2"
+        fontSize="medium"
+      >
         No results found
       </Typography>
     </Box>

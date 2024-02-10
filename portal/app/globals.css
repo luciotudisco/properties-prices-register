@@ -2,15 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
+.SearchBoxInput {
+  border-radius: 4px !important;
+  box-shadow: none !important;
+  border-color: rgba(0, 0, 0, 0.12) !important;
+  caret-color: inherit !important;
+  font-family: monospace !important;
+}
+
 .SearchInfiniteHitsList,
 .SearchInfiniteHits {
   width: 100%;
 }
 
+.SearchInfiniteLoadMore {
+  font-family: monospace !important;
+  border: none !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+
 .RefinementListLabelText {
   font-size: 0.8rem;
-  font-weight: 400;
-  text-transform: uppercase;
+  font-family: monospace;
 }
 
 .RefinementListCheckbox {
@@ -20,12 +35,13 @@
 }
 
 .RefinementListCount {
-  border-radius: 16 !important;
+  border-radius: 10px !important;
   font-family: monospace !important;
 }
 
 .RefinementListShowMore {
   border: none !important;
+  background-color: transparent !important;
   background-image: none !important;
   box-shadow: none !important;
   padding: 0 !important;

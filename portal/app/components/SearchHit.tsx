@@ -3,19 +3,27 @@
 import { Button, Grid, Typography } from "@mui/material";
 import { NumericFormat } from "react-number-format";
 import Moment from "moment";
-import SearchHitClips from "./SearchHitClips";
+import SearchHitClips from "./HitClips";
 import AddLocationAltTwoToneIcon from "@mui/icons-material/AddLocationAltTwoTone";
 import Link from "next/link";
 
 const SearchHit = function (props: { hit: any }): JSX.Element {
   const { hit } = props;
   return (
-    <Grid container className="w-full h-full p-2 flex" spacing={2}>
+    <Grid container className="w-full h-full flex" spacing={2}>
       <Grid item xs={12} md={8} className="flex flex-col w-full h-full gap-2">
-        <Typography className="text-gray-900" variant="h5" fontSize="small">
+        <Typography
+          className="text-gray-900 text-md font-mono"
+          variant="h5"
+          fontSize="small"
+        >
           {hit.raw_address}
         </Typography>
-        <Typography className="text-gray-500" variant="h5" fontSize="small">
+        <Typography
+          className="text-gray-500 font-mono font-extralight"
+          variant="h5"
+          fontSize="small"
+        >
           {hit.property_type}
         </Typography>
         {hit.location_type == "exact" && (
@@ -26,7 +34,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
             <Button
               aria-label="Open Google Maps Link"
               size="small"
-              className="text-xs p-0 font-extralight"
+              className="text-xs p-0 font-extralight font-mono"
               startIcon={<AddLocationAltTwoToneIcon />}
               variant="text"
             >
@@ -45,10 +53,14 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
           value={hit.price}
           displayType="text"
           thousandSeparator={true}
-          className="text-gray-900 text-medium font-bold"
+          className="text-gray-900 text-medium font-bold font-mono"
           prefix="€"
         />
-        <Typography className="text-gray-500" variant="h5" fontSize="small">
+        <Typography
+          className="text-gray-500 font-mono"
+          variant="h5"
+          fontSize="small"
+        >
           {Moment(hit.sale_date * 1000).format("ll")}
         </Typography>
       </Grid>

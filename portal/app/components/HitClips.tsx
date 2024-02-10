@@ -32,7 +32,7 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
         <Chip
           label={hit.county}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
+          className="font-thin font-mono"
           onClick={() => refine(false, false, false)}
         />
       )}
@@ -40,7 +40,7 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
         <Chip
           label={hit.locality}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
+          className="font-thin font-mono"
           onClick={() => refine(true, false, false)}
         />
       )}
@@ -48,7 +48,7 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
         <Chip
           label={hit.neighborhood}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
+          className="font-thin font-mono"
           onClick={() => refine(true, true, false)}
         />
       )}
@@ -56,7 +56,7 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
         <Chip
           label={hit.street}
           size="small"
-          className="bg-amber-500 hover:bg-amber-600 hover:text-white font-thin"
+          className="font-thin font-mono"
           onClick={() => refine(true, true, true)}
         />
       )}
