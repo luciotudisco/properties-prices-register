@@ -13,7 +13,7 @@ const SearchCurrentRefinements = function (): JSX.Element {
             <Chip
               label={refinement.label}
               size="small"
-              className="p-2 md:p-4 font-thin font-mono bg-amber-500 hover:bg-amber-600 hover:text-white"
+              className="p-4 font-thin font-mono bg-amber-500 hover:bg-amber-600 hover:text-white"
               deleteIcon={<HighlightOffIcon />}
               onDelete={() => refine(refinement)}
             />

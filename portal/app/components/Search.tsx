@@ -23,9 +23,9 @@ const Search = function (): JSX.Element {
   const [view, setView] = useState<SearchView>(SearchView.LIST);
 
   return (
-    <Stack className="h-full w-full gap-5 pt-5">
+    <Stack className="h-full w-full gap-5 p-5 overflow-y-auto">
       <SearchBar />
-      <Grid container className="flex w-full h-full overflow-y-auto">
+      <Grid container className="flex w-full h-full">
         <Grid item sm={0} md={0} lg={2} />
         <Grid
           item
@@ -61,7 +61,7 @@ const Search = function (): JSX.Element {
                 {view == SearchView.LIST && (
                   <>
                     <Typography
-                      className="text-gray-400"
+                      className="text-gray-400 mb-2"
                       variant="caption"
                       fontSize="small"
                     >

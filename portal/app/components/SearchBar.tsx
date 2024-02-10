@@ -39,8 +39,8 @@ const SearchBar = function (): JSX.Element {
 
   return (
     <Grid container className="flex w-full">
-      <Grid item sm={0} md={0} lg={2} />
-      <Grid item sm={12} md={12} lg={8}>
+      <Grid item xs={0} sm={0} md={0} lg={2} />
+      <Grid item xs={12} sm={12} md={12} lg={8}>
         <Box className="flex flex-row w-full gap-2 items-center">
           <SearchBox
             className="w-full"
@@ -76,7 +76,7 @@ const SearchBar = function (): JSX.Element {
           </Drawer>
         </Box>
       </Grid>
-      <Grid item sm={0} md={0} lg={2} />
+      <Grid item xs={0} sm={0} md={0} lg={2} />
     </Grid>
   );
 };
