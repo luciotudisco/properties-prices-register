@@ -57,11 +57,20 @@ class UtilsTestCase(TestCase):
         )
 
     @mock.patch("requests.get")
-    def test_geocode_address_with_error(self, mock_get):
-        mock_response = mock.Mock()
+    def test_geocode_address_with_not_found_error(self, mock_get):
+        mock_response = mock.Mock(status_code=404)
         mock_response.raise_for_status = mock.Mock()
-        mock_response.raise_for_status.side_effect = HTTPError("Oops, something went wrong!")
+        mock_response.raise_for_status.side_effect = HTTPError(response=mock_response)
         mock_get.return_value = mock_response
 
         actual_geo_code = geocode_address("foo bar address ")
         self.assertIsNone(actual_geo_code)
+
+    @mock.patch("requests.get")
+    def test_geocode_address_with_server_error(self, mock_get):
+        mock_response = mock.Mock(status_code=500)
+        mock_response.raise_for_status = mock.Mock()
+        mock_response.raise_for_status.side_effect = HTTPError(response=mock_response)
+        mock_get.return_value = mock_response
+
+        self.assertRaises(HTTPError, geocode_address, "foo bar address ")

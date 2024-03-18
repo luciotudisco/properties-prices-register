@@ -100,7 +100,12 @@ def load_property(
         logger.warning("Property with digest [%s] already exists", property_digest)
         return
 
-    geocode_result = geocode_address(address=address)
+    try:
+        geocode_result = geocode_address(address=address)
+    except Exception:
+        logger.exception("Error retrieving geocode for address [%s].", address)
+        return
+
     if geocode_result is None:
         logger.error("No geocode found for address [%s]. The property will be saved with basic details.", address)
         Property.objects.create(

@@ -11,7 +11,7 @@ app.autodiscover_tasks()
 app.conf.beat_schedule = {
     "load_properties": {
         "task": "load_properties",
-        "schedule": crontab(hour=8, day_of_week=0),  # Every Sunday at 8am
+        "schedule": crontab(hour=8),  # Every day at 8am UTC
         "args": [2],  # Load properties sold in the past 3 months
     }
 }

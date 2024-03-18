@@ -33,6 +33,8 @@ def geocode_address(address: str) -> Optional[Dict[str, Any]]:
         json_response = response.json()
         geo_code_results = json_response.get("results", [])
         return geo_code_results[0] if geo_code_results else None
-    except Exception:
-        logger.exception("Error retrieving geocode for address [%s]", address)
-        return None
+    except requests.RequestException as e:
+        if e.response and e.response.status_code == 404:
+            logger.warning("No geocode found for address [%s]", address)
+            return None
+        raise e
