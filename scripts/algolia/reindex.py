@@ -10,7 +10,7 @@ logging.basicConfig(stream=sys.stdout, level=logging.INFO)
 logger = logging.getLogger("scripts.reindex")
 
 
-def reindex_properties(algolia_app_id: str, algolia_api_key: str, algolia_ndex_name: str) -> None:
+def reindex_properties(algolia_app_id: str, algolia_api_key: str, algolia_index_name: str) -> None:
     """
     Reindexes all properties in Algolia in batches.
 
@@ -23,7 +23,8 @@ def reindex_properties(algolia_app_id: str, algolia_api_key: str, algolia_ndex_n
         None
     """
     algolia_client = SearchClient.create(algolia_app_id, algolia_api_key)
-    algolia_properties_index = algolia_client.init_index(algolia_ndex_name)
+    algolia_properties_index = algolia_client.init_index(algolia_index_name)
+    algolia_properties_index.clear_objects()
     url = "https://api.irishpropertiesprices.com/v1/properties/"
     num_properties = 0
     while True:
