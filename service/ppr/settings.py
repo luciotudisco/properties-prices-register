@@ -207,6 +207,11 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 sentry_sdk.init(
     dsn=SENTRY_DNS,
+    integrations=[
+        sentry_sdk.integrations.celery.CeleryIntegration(
+            monitor_beat_tasks=True,
+        )
+    ],
     traces_sample_rate=1.0,
     profiles_sample_rate=1.0,
 )

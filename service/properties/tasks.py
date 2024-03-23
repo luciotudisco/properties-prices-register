@@ -102,8 +102,8 @@ def load_property(
 
     try:
         geocode_result = geocode_address(address=address)
-    except Exception:
-        logger.exception("Error retrieving geocode for address [%s].", address)
+    except Exception as ex:
+        logger.error("Error retrieving geocode for address [%s]: [%s].", address, ex)
         return
 
     if geocode_result is None:
