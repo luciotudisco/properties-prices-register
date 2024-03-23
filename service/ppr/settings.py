@@ -13,6 +13,7 @@ import os
 from pathlib import Path
 
 import sentry_sdk
+from sentry_sdk.integrations.celery import CeleryIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -208,7 +209,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 sentry_sdk.init(
     dsn=SENTRY_DNS,
     integrations=[
-        sentry_sdk.integrations.celery.CeleryIntegration(
+        CeleryIntegration(
             monitor_beat_tasks=True,
         )
     ],
