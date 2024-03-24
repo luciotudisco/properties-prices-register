@@ -33,13 +33,11 @@ class StatsService {
     try {
       const timeFieldName = `sale_date__trunc__${request.period}`;
       const max_sale_year =
-        request.sale_years.length > 0
-          ? Math.max(...request.sale_years)
+        request.saleYears.length > 0
+          ? Math.max(...request.saleYears)
           : new Date().getFullYear();
       const min_sale_year =
-        request.sale_years.length > 0
-          ? Math.min(...request.sale_years)
-          : "2010";
+        request.saleYears.length > 0 ? Math.min(...request.saleYears) : "2010";
       const params: { [key: string]: string } = {
         ...this.buildAggregationParms(request.aggregation),
         truncateDate: `sale_date=${request.period}`,

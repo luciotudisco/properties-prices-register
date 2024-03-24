@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Box, Chip } from "@mui/material";
+import { Button, Flex } from "@mantine/core";
 import { useInstantSearch } from "react-instantsearch";
 
 const SearchHitClips = function (props: { hit: any }): JSX.Element {
@@ -27,40 +27,55 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
   }
 
   return (
-    <Box className="w-full flex flex-row flex-wrap gap-2 items-center">
+    <Flex
+      w="full"
+      gap="xs"
+      justify="flex-start"
+      align="flex-start"
+      direction="row"
+      wrap="wrap"
+    >
       {hit.county && (
-        <Chip
-          label={hit.county}
-          size="small"
-          className="font-thin font-mono"
+        <Button
+          variant="light"
+          radius="xs"
+          size="xs"
           onClick={() => refine(false, false, false)}
-        />
+        >
+          {hit.county}
+        </Button>
       )}
       {hit.locality && (
-        <Chip
-          label={hit.locality}
-          size="small"
-          className="font-thin font-mono"
+        <Button
+          variant="light"
+          radius="xs"
+          size="xs"
           onClick={() => refine(true, false, false)}
-        />
+        >
+          {hit.locality}
+        </Button>
       )}
       {hit.neighborhood && hit.neighborhood !== hit.locality && (
-        <Chip
-          label={hit.neighborhood}
-          size="small"
-          className="font-thin font-mono"
+        <Button
+          variant="light"
+          radius="xs"
+          size="xs"
           onClick={() => refine(true, true, false)}
-        />
+        >
+          {hit.neighborhood}
+        </Button>
       )}
       {hit.street && (
-        <Chip
-          label={hit.street}
-          size="small"
-          className="font-thin font-mono"
+        <Button
+          variant="light"
+          radius="xs"
+          size="xs"
           onClick={() => refine(true, true, true)}
-        />
+        >
+          {hit.street}
+        </Button>
       )}
-    </Box>
+    </Flex>
   );
 };
 

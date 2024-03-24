@@ -2,41 +2,24 @@
 
 import { useCurrentRefinements } from "react-instantsearch";
 import { useEffect, useState } from "react";
-import {
-  Box,
-  CircularProgress,
-  Grid,
-  MenuItem,
-  Select,
-  Typography,
-} from "@mui/material";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ResponsiveContainer,
-} from "recharts";
 import StatsService from "../services/stats.service";
 import {
   AggregationType,
   AggregationPeriod,
   StatsRecord,
 } from "../types/services";
+import { Box, Flex, LoadingOverlay, Text, Title } from "@mantine/core";
+import { LineChart } from "@mantine/charts";
 
 const statsService = new StatsService();
 
 const SearchGraph = function (): JSX.Element {
   const { items } = useCurrentRefinements();
-  const [aggregation, setAggregation] = useState<AggregationPeriod>(
-    AggregationPeriod.YEAR,
-  );
+  const [aggregation] = useState<AggregationPeriod>(AggregationPeriod.YEAR);
   const [pricesStats, setPricesStats] = useState<StatsRecord[]>([]);
   const [countStats, setCountStats] = useState<StatsRecord[]>([]);
-  const [isLoading, setLoading] = useState(true);
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -44,7 +27,7 @@ const SearchGraph = function (): JSX.Element {
       const localities = getRefinements(items, "locality");
       const neighborhoods = getRefinements(items, "neighborhood");
       const streets = getRefinements(items, "street");
-      const sale_years = getRefinements(items, "sale_year");
+      const saleYears = getRefinements(items, "sale_year");
 
       const pricesData = await statsService.getStats({
         aggregation: AggregationType.MEDIAN_PRICE,
@@ -52,7 +35,7 @@ const SearchGraph = function (): JSX.Element {
         localities,
         neighborhoods,
         streets,
-        sale_years,
+        saleYears,
         period: aggregation,
       });
       setPricesStats(pricesData.data);
@@ -63,7 +46,7 @@ const SearchGraph = function (): JSX.Element {
         localities,
         neighborhoods,
         streets,
-        sale_years,
+        saleYears,
         period: aggregation,
       });
       setCountStats(countsData.data);
@@ -78,9 +61,6 @@ const SearchGraph = function (): JSX.Element {
     };
 
     try {
-      if (isLoading) {
-        return;
-      }
       setHasError(false);
       setLoading(true);
       fetchData();
@@ -94,101 +74,52 @@ const SearchGraph = function (): JSX.Element {
   if (isLoading)
     return (
       <Box className="flex h-full w-full items-center align-middle justify-center">
-        <CircularProgress />
+        <LoadingOverlay />
       </Box>
     );
 
   if (hasError)
     return (
       <Box className="flex h-full w-full items-center align-middle justify-center">
-        <Typography fontSize="medium" variant="body2">
-          Oops! Something went wrong!
-        </Typography>
+        <Text size="md">Oops! Something went wrong!</Text>
       </Box>
     );
 
   return (
-    <Grid container className="h-full w-full">
-      <Grid
-        item
-        xs={12}
-        className="w-full flex flex-row-reverse justify-center align-middle items-center"
-      >
-        <Select
-          value={aggregation}
-          defaultValue={AggregationPeriod.YEAR}
-          onChange={(event) =>
-            setAggregation(event.target.value as AggregationPeriod)
-          }
-          disabled={isLoading}
-          variant="outlined"
-          label="Time aggregation"
-          className="w-min-60 font-mono"
-          size="small"
-        >
-          <MenuItem value={AggregationPeriod.YEAR}>Yearly</MenuItem>
-          <MenuItem value={AggregationPeriod.MONTH}>Monthly</MenuItem>
-        </Select>
-      </Grid>
-      <Grid item xs={12} className="w-full h-full pb-10 max-h-96">
-        <Typography
-          className="font-mono py-2 font-bold text-sm uppercase"
-          variant="h2"
-        >
+    <Flex direction="column" gap="lg">
+      <Flex direction="column" className="w-full pb-10">
+        <Title order={2} className="py-2 text-sm uppercase">
           Median price
-        </Typography>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            syncId="yearly-charts"
-            data={pricesStats}
-            className="text-xs font-mono"
-            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis
-              dataKey="value"
-              tickFormatter={(v) =>
-                new Intl.NumberFormat("en", { notation: "compact" }).format(v)
-              }
-            />
-            <Line type="monotone" dataKey="value" stroke="#06d6a0" />
-            <Tooltip />
-          </LineChart>
-        </ResponsiveContainer>
-      </Grid>
-      <Grid item xs={12} className=" w-full h-full pt-10 max-h-96">
-        <Typography
-          className="font-mono py-2 font-bold text-sm uppercase"
-          variant="h2"
-        >
+        </Title>
+        <LineChart
+          data={pricesStats}
+          className="text-xs"
+          h={300}
+          dataKey="time"
+          withLegend={false}
+          series={[{ name: "value", color: "red" }]}
+          valueFormatter={(v) =>
+            new Intl.NumberFormat("en", { notation: "compact" }).format(v)
+          }
+        />
+      </Flex>
+      <Flex direction="column" className="w-full pb-10">
+        <Title order={2} className="py-2  text-sm uppercase">
           Number of properties sold
-        </Typography>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            syncId="yearly-charts"
-            data={countStats}
-            className="text-xs font-mono"
-            margin={{ top: 5, right: 5, left: 5, bottom: 5 }}
-          >
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis
-              dataKey="value"
-              tickFormatter={(v) =>
-                new Intl.NumberFormat("en", { notation: "compact" }).format(v)
-              }
-            />
-            <Line type="monotone" dataKey="value" stroke="#ef476f" />
-            <Tooltip
-              labelFormatter={(value) => {
-                return `label: ${value}`;
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
-      </Grid>
-    </Grid>
+        </Title>
+        <LineChart
+          data={countStats}
+          className="text-xs"
+          h={300}
+          dataKey="time"
+          withLegend={false}
+          valueFormatter={(v) =>
+            new Intl.NumberFormat("en", { notation: "compact" }).format(v)
+          }
+          series={[{ name: "value", color: "red" }]}
+        />
+      </Flex>
+    </Flex>
   );
 };
 

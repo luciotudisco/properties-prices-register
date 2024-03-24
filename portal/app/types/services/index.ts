@@ -14,7 +14,7 @@ export interface StatsRequest {
   localities: string[];
   neighborhoods: string[];
   streets: string[];
-  sale_years: number[];
+  saleYears: number[];
   period: AggregationPeriod;
 }
 

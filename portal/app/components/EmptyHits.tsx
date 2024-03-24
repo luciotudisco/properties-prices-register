@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Flex, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
+import ClearFilters from "./ClearFilters";
 
 const EmptyHits = function (): JSX.Element {
   const [animationData, setAnimationData] = useState<object>();
@@ -10,16 +11,18 @@ const EmptyHits = function (): JSX.Element {
   }, []);
 
   return (
-    <Box className="flex flex-col w-full h-full align-middle items-center justify-center gap-5">
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      w="100%"
+      h="100%"
+      gap="md"
+    >
       <Lottie animationData={animationData} loop play />
-      <Typography
-        className="text-gray-500 font-mono"
-        variant="body2"
-        fontSize="medium"
-      >
-        No results found
-      </Typography>
-    </Box>
+      <Text size="sm">No results found</Text>
+      <ClearFilters />
+    </Flex>
   );
 };
 

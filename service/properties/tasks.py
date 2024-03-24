@@ -15,11 +15,13 @@ from ppr.settings import PROPERTY_PRICE_REGISTER_BASE_URL
 from properties.models import County
 from properties.models import Property
 from properties.utils import geocode_address
+from sentry_sdk.crons import monitor
 
 logger = logging.getLogger("ppr.properties.tasks")
 
 
 @shared_task(name="load_properties")
+@monitor(monitor_slug="load_properties")
 def load_properties(lookback_months: int = 1):
     """
     Load properties for a given number of lookback months for all Irish counties.
@@ -39,6 +41,7 @@ def load_properties(lookback_months: int = 1):
 
 
 @shared_task(name="load_properties_for_county_and_date")
+@monitor(monitor_slug="load_properties_for_county_and_date")
 def load_properties_for_county_and_date(county: County, month: str, year: str):
     """
     Load properties for a specific county and date from the Property Price Register.
@@ -74,6 +77,7 @@ def load_properties_for_county_and_date(county: County, month: str, year: str):
 
 
 @shared_task(name="load_property")
+@monitor(monitor_slug="load_property")
 def load_property(
     sale_date: date,
     address: str,

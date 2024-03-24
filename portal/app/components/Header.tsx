@@ -1,22 +1,21 @@
-import { AppBar, Box, Toolbar, Typography } from "@mui/material";
-import Link from "next/link";
+import SearchBar from "./SearchBar";
+import { Burger, Flex, Title } from "@mantine/core";
 
-const Header = function (): JSX.Element {
+export interface HeaderProps {
+  opened?: boolean;
+  toggle: () => void;
+}
+
+const Header = function (props: HeaderProps): JSX.Element {
+  const { opened, toggle } = props;
   return (
-    <AppBar position="fixed" className="h-14 flex justify-center bg-slate-700">
-      <Toolbar className="flex h-full flex-row justify-between">
-        <Box className="flex flex-row gap-2 items-center">
-          <Link href="/">
-            <Typography
-              className="text-white font-mono font-extralight"
-              textTransform="uppercase"
-            >
-              Irish Properties Prices
-            </Typography>
-          </Link>
-        </Box>
-      </Toolbar>
-    </AppBar>
+    <Flex direction="row" align="center" gap="sm" className="w-full">
+      <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
+      <Title order={1} className="w-full text-sm md:text-xl">
+        Irish Properties Prices
+      </Title>
+      <SearchBar />
+    </Flex>
   );
 };
 
