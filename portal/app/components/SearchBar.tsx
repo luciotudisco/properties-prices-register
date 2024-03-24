@@ -19,7 +19,7 @@ const SearchBar = function (): JSX.Element {
       onChange={(event) => {
         refine(event.currentTarget.value);
       }}
-      className="md:min-w-96 sm:min-w-72"
+      className="max-w-lg w-full"
       leftSection={<IconSearch size={16} />}
       rightSectionPointerEvents="all"
       rightSection={

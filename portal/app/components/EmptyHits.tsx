@@ -1,14 +1,23 @@
-import { Flex, Text } from "@mantine/core";
+import { Button, Flex, Text } from "@mantine/core";
 import { useEffect, useState } from "react";
 import Lottie from "react-lottie-player";
-import ClearFilters from "./ClearFilters";
+import { useInstantSearch } from "react-instantsearch";
 
 const EmptyHits = function (): JSX.Element {
+  const { setIndexUiState } = useInstantSearch();
   const [animationData, setAnimationData] = useState<object>();
 
   useEffect(() => {
     import("./assets/no-results-lottie.json").then(setAnimationData);
   }, []);
+
+  function clearFilters() {
+    setIndexUiState((prevIndexUiState) => ({
+      ...prevIndexUiState,
+      query: "",
+      refinementList: {},
+    }));
+  }
 
   return (
     <Flex
@@ -21,7 +30,9 @@ const EmptyHits = function (): JSX.Element {
     >
       <Lottie animationData={animationData} loop play />
       <Text size="sm">No results found</Text>
-      <ClearFilters />
+      <Button variant="subtle" onClick={clearFilters}>
+        Clear Filters
+      </Button>
     </Flex>
   );
 };

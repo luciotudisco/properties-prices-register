@@ -35,7 +35,7 @@ const Search = function (): JSX.Element {
           Graph
         </Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value={SearchView.LIST}>
+      <Tabs.Panel value={SearchView.LIST} className="mx-5 md:mx-20 xl:mx-40">
         <SearchCurrentRefinements />
         <Text
           className="text-gray-400 mb-2 text-center"
@@ -55,7 +55,7 @@ const Search = function (): JSX.Element {
           showPrevious={false}
         />
       </Tabs.Panel>
-      <Tabs.Panel value={SearchView.GRAPH}>
+      <Tabs.Panel value={SearchView.GRAPH} className="mx-5 md:mx-20 xl:mx-40">
         <SearchCurrentRefinements />
         <SearchGraph />
       </Tabs.Panel>

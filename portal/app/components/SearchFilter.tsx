@@ -29,7 +29,7 @@ const SearchFilter = function (props: {
       <Flex
         gap="xs"
         direction="column"
-        className="min-h-8 bg-slate-900  align-middle justify-center"
+        className="min-h-8  bg-cyan-950 align-middle justify-center"
       >
         <Text size="xs" className="uppercase text-white p-2">
           {label}
@@ -48,14 +48,22 @@ const SearchFilter = function (props: {
           <Flex gap="xs" direction="row" align="center">
             <Checkbox
               checked={item.isRefined}
-              onChange={() => refine(item.value)}
               size="xs"
+              onChange={() => refine(item.value)}
               className="text-sm"
             />
-            <Text size="xs" className="text-xs w-full">
+            <Text
+              size="xs"
+              className="text-xs w-full"
+              onClick={() => refine(item.value)}
+            >
               {item.label}
             </Text>
-            <Text size="xs" className="text-xs">
+            <Text
+              size="xs"
+              className="text-xs text-slate-400"
+              onClick={() => refine(item.value)}
+            >
               {item.count}
             </Text>
           </Flex>

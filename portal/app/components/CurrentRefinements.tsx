@@ -16,7 +16,7 @@ const SearchCurrentRefinements = function (): JSX.Element {
               variant="light"
               onChange={() => refine(refinement)}
             >
-              {refinement.label}
+              {refinement.attribute}: {refinement.label}
             </Chip>
           ))}
         </Box>

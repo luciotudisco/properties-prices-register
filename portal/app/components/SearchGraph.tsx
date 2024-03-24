@@ -71,12 +71,7 @@ const SearchGraph = function (): JSX.Element {
     }
   }, [items, aggregation]);
 
-  if (isLoading)
-    return (
-      <Box className="flex h-full w-full items-center align-middle justify-center">
-        <LoadingOverlay />
-      </Box>
-    );
+  if (isLoading) return <LoadingOverlay />;
 
   if (hasError)
     return (
@@ -87,8 +82,8 @@ const SearchGraph = function (): JSX.Element {
 
   return (
     <Flex direction="column" gap="lg">
-      <Flex direction="column" className="w-full pb-10">
-        <Title order={2} className="py-2 text-sm uppercase">
+      <Flex direction="column" className="w-full">
+        <Title order={2} className="py-10 text-sm uppercase">
           Median price
         </Title>
         <LineChart
@@ -103,8 +98,8 @@ const SearchGraph = function (): JSX.Element {
           }
         />
       </Flex>
-      <Flex direction="column" className="w-full pb-10">
-        <Title order={2} className="py-2  text-sm uppercase">
+      <Flex direction="column" className="w-full">
+        <Title order={2} className="py-10 text-sm uppercase">
           Number of properties sold
         </Title>
         <LineChart

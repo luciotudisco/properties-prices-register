@@ -14,7 +14,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
         span={{ base: 12, md: 8 }}
         className="flex flex-col w-full h-full gap-2"
       >
-        <Text className="text-zinc-900 text-sm">{hit.raw_address}</Text>
+        <Text className="text-zinc-900">{hit.raw_address}</Text>
         <Text className="text-zinc-500 font-extralight">
           {hit.property_type}
         </Text>
@@ -41,7 +41,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
         <NumberFormatter
           value={hit.price}
           thousandSeparator={true}
-          className="text-zinc-900 text-medium font-bold"
+          className="text-zinc-900 font-bold"
           prefix="€"
         />
         <Text className="text-zinc-500" variant="h5">

@@ -1,5 +1,5 @@
 import SearchBar from "./SearchBar";
-import { Burger, Flex, Title } from "@mantine/core";
+import { Burger, Flex, Group, Title } from "@mantine/core";
 
 export interface HeaderProps {
   opened?: boolean;
@@ -9,9 +9,15 @@ export interface HeaderProps {
 const Header = function (props: HeaderProps): JSX.Element {
   const { opened, toggle } = props;
   return (
-    <Flex direction="row" align="center" gap="sm" className="w-full">
-      <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
-      <Title order={1} className="w-full text-sm md:text-xl">
+    <Flex align="center" gap="sm" className="w-full h-full px-5 flex-row">
+      <Burger
+        opened={opened}
+        onClick={toggle}
+        hiddenFrom="sm"
+        size="sm"
+        color="white"
+      />
+      <Title order={1} className="w-full text-xl text-white" visibleFrom="sm">
         Irish Properties Prices
       </Title>
       <SearchBar />

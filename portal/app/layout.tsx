@@ -9,7 +9,7 @@ import { useDisclosure } from "@mantine/hooks";
 import algoliasearch from "algoliasearch";
 import { InstantSearch } from "react-instantsearch";
 import SearchFilters from "./components/SearchFilters";
-import ClearFilters from "./components/ClearFilters";
+import FiltersFooter from "./components/FiltersFooter";
 
 const searchClient = algoliasearch(
   "0NVC6NE905",
@@ -50,22 +50,20 @@ export default function RootLayout({
                 breakpoint: "sm",
                 collapsed: { mobile: !opened },
               }}
-              padding="md"
+              padding="sm"
             >
-              <AppShell.Header>
-                <Group h="100%" w="100%" px="md">
-                  <Header opened={opened} toggle={toggle} />
-                </Group>
+              <AppShell.Header className="bg-cyan-950">
+                <Header opened={opened} toggle={toggle} />
               </AppShell.Header>
               <AppShell.Navbar>
                 <AppShell.Section grow component={ScrollArea}>
                   <SearchFilters />
                 </AppShell.Section>
                 <AppShell.Section>
-                  <ClearFilters />
+                  <FiltersFooter opened={opened} toggle={toggle} />
                 </AppShell.Section>
               </AppShell.Navbar>
-              <AppShell.Main h={100}>{children}</AppShell.Main>
+              <AppShell.Main>{children}</AppShell.Main>
             </AppShell>
           </InstantSearch>
         </MantineProvider>
