@@ -18,6 +18,7 @@ const Search = function (): JSX.Element {
       </Flex>
     );
   }
+
   return (
     <Tabs variant="pills" defaultValue={SearchView.LIST}>
       <Tabs.List className="justify-end">
@@ -55,13 +56,6 @@ const Search = function (): JSX.Element {
         />
       </Tabs.Panel>
       <Tabs.Panel value={SearchView.GRAPH}>
-        <Text
-          className="text-gray-400 mb-2 text-center"
-          variant="caption"
-          size="xs"
-        >
-          {nbHits} results found
-        </Text>
         <SearchCurrentRefinements />
         <SearchGraph />
       </Tabs.Panel>
