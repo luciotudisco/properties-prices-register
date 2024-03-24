@@ -3,7 +3,7 @@
 import Moment from "moment";
 import SearchHitClips from "./HitClips";
 import Link from "next/link";
-import { Grid, NavLink, NumberFormatter, Text } from "@mantine/core";
+import { Grid, Group, NavLink, NumberFormatter, Text } from "@mantine/core";
 import { IconBrandGoogleMaps } from "@tabler/icons-react";
 
 const SearchHit = function (props: { hit: any }): JSX.Element {
@@ -14,25 +14,27 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
         span={{ base: 12, md: 8 }}
         className="flex flex-col w-full h-full gap-2"
       >
-        <Text className="text-zinc-900">{hit.raw_address}</Text>
-        <Text className="text-zinc-500 font-extralight">
-          {hit.property_type}
+        <Group gap="xs">
+          <Text className="text-zinc-900" size="sm">
+            {hit.raw_address}
+          </Text>
+          <Link
+            href={`http://maps.google.com/maps?z=12&t=m&q=loc:${hit.latitude}+${hit.longitude}`}
+            target="_blank"
+            hidden={hit.location_type !== "exact"}
+          >
+            <NavLink
+              aria-label="Open Google Maps Link"
+              className="text-xs p-0 font-extralight bg-transparent"
+              leftSection={<IconBrandGoogleMaps />}
+              variant="light"
+              active
+            />
+          </Link>
+        </Group>
+        <Text className="text-zinc-500" size="xs">
+          {Moment(hit.sale_date * 1000).format("ll")}
         </Text>
-
-        <Link
-          href={`http://maps.google.com/maps?z=12&t=m&q=loc:${hit.latitude}+${hit.longitude}`}
-          target="_blank"
-          hidden={hit.location_type !== "exact"}
-        >
-          <NavLink
-            aria-label="Open Google Maps Link"
-            className="text-xs p-0 font-extralight bg-transparent"
-            leftSection={<IconBrandGoogleMaps />}
-            variant="subtle"
-            label="Find on Google Maps"
-            active
-          />
-        </Link>
       </Grid.Col>
       <Grid.Col
         span={{ base: 12, md: 4 }}
@@ -44,9 +46,6 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
           className="text-zinc-900 font-bold"
           prefix="€"
         />
-        <Text className="text-zinc-500" variant="h5">
-          {Moment(hit.sale_date * 1000).format("ll")}
-        </Text>
       </Grid.Col>
       <Grid.Col span={{ base: 12 }}>
         <SearchHitClips hit={hit} />

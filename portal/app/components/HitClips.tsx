@@ -1,30 +1,40 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Button, Flex } from "@mantine/core";
+import { useEffect, useState } from "react";
 import { useInstantSearch } from "react-instantsearch";
 
 const SearchHitClips = function (props: { hit: any }): JSX.Element {
   const { hit } = props;
   const { setIndexUiState } = useInstantSearch();
+  const [propertyType, setPropertyType] = useState(null);
+  const [county, setCounty] = useState(null);
+  const [locality, setLocality] = useState(null);
+  const [neighborhood, setNeighborhood] = useState(null);
+  const [street, setStreet] = useState(null);
 
-  function refine(
-    includeLocality: boolean,
-    includeNeighborhood: boolean,
-    includeStreet: boolean,
-  ) {
+  useEffect(() => {
     setIndexUiState((prevIndexUiState) => ({
       ...prevIndexUiState,
-      query: "",
       refinementList: {
-        ...prevIndexUiState.refinementList,
-        county: [hit.county],
-        locality: includeLocality && hit.locality ? [hit.locality] : [],
-        neighborhood:
-          includeNeighborhood && hit.neighborhood ? [hit.neighborhood] : [],
-        street: includeStreet && hit.street ? [hit.street] : [],
+        property_type: propertyType
+          ? [propertyType]
+          : prevIndexUiState.refinementList?.property_type || [],
+        county: county
+          ? [county]
+          : prevIndexUiState.refinementList?.county || [],
+        locality: locality
+          ? [locality]
+          : prevIndexUiState.refinementList?.locality || [],
+        neighborhood: neighborhood
+          ? [neighborhood]
+          : prevIndexUiState.refinementList?.neighborhood || [],
+        street: street
+          ? [street]
+          : prevIndexUiState.refinementList?.street || [],
       },
     }));
-  }
+  }, [propertyType, county, locality, neighborhood, street]);
 
   return (
     <Flex
@@ -35,42 +45,73 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
       direction="row"
       wrap="wrap"
     >
-      {hit.county && (
-        <Button
-          variant="light"
-          radius="xs"
-          size="xs"
-          onClick={() => refine(false, false, false)}
-        >
-          {hit.county}
-        </Button>
-      )}
+      <Button
+        variant="subtle"
+        radius="xs"
+        size="xs"
+        p="xs"
+        onClick={() => setPropertyType(hit.property_type)}
+      >
+        {hit.property_type}
+      </Button>
+      <Button
+        variant="subtle"
+        radius="xs"
+        size="xs"
+        p="xs"
+        onClick={() => {
+          setCounty(hit.county);
+          setLocality(null);
+          setNeighborhood(null);
+          setStreet(null);
+        }}
+      >
+        {hit.county}
+      </Button>
       {hit.locality && (
         <Button
-          variant="light"
+          variant="subtle"
           radius="xs"
           size="xs"
-          onClick={() => refine(true, false, false)}
+          p="xs"
+          onClick={() => {
+            setCounty(hit.county);
+            setLocality(hit.locality);
+            setNeighborhood(null);
+            setStreet(null);
+          }}
         >
           {hit.locality}
         </Button>
       )}
       {hit.neighborhood && hit.neighborhood !== hit.locality && (
         <Button
-          variant="light"
+          variant="subtle"
           radius="xs"
           size="xs"
-          onClick={() => refine(true, true, false)}
+          p="xs"
+          onClick={() => {
+            setCounty(hit.county);
+            setLocality(hit.locality);
+            setNeighborhood(hit.neighborhood);
+            setStreet(null);
+          }}
         >
           {hit.neighborhood}
         </Button>
       )}
       {hit.street && (
         <Button
-          variant="light"
+          variant="subtle"
           radius="xs"
+          p="xs"
           size="xs"
-          onClick={() => refine(true, true, true)}
+          onClick={() => {
+            setCounty(hit.county);
+            setLocality(hit.locality);
+            setNeighborhood(hit.neighborhood);
+            setStreet(hit.street);
+          }}
         >
           {hit.street}
         </Button>

@@ -12,11 +12,12 @@ const SearchCurrentRefinements = function (): JSX.Element {
           {item.refinements.map((refinement) => (
             <Chip
               icon={<IconX style={{ width: rem(16), height: rem(16) }} />}
-              defaultChecked={true}
+              checked
+              defaultChecked
               variant="light"
               onChange={() => refine(refinement)}
             >
-              {refinement.attribute}: {refinement.label}
+              {refinement.label}
             </Chip>
           ))}
         </Box>

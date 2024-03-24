@@ -44,16 +44,7 @@ const Search = function (): JSX.Element {
         >
           {nbHits} results found
         </Text>
-        <InfiniteHits
-          classNames={{
-            root: "SearchInfiniteHits",
-            list: "SearchInfiniteHitsList",
-            item: "SearchInfiniteHitsItem",
-            loadMore: "SearchInfiniteLoadMore",
-          }}
-          hitComponent={SearchHit}
-          showPrevious={false}
-        />
+        <InfiniteHits hitComponent={SearchHit} showPrevious={false} />
       </Tabs.Panel>
       <Tabs.Panel value={SearchView.GRAPH} className="mx-5 md:mx-20 xl:mx-40">
         <SearchCurrentRefinements />

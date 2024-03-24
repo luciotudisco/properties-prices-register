@@ -52,7 +52,7 @@ export default function RootLayout({
               }}
               padding="sm"
             >
-              <AppShell.Header className="bg-cyan-950">
+              <AppShell.Header className="bg-emerald-950">
                 <Header opened={opened} toggle={toggle} />
               </AppShell.Header>
               <AppShell.Navbar>

@@ -21,15 +21,11 @@ const SearchFilter = function (props: {
   } = useRefinementList(props);
 
   return (
-    <Flex
-      gap="xs"
-      direction="column"
-      className="border m-2 border-slate-100-500"
-    >
+    <Flex gap="xs" direction="column" className=" m-2 bg-gray-50">
       <Flex
         gap="xs"
         direction="column"
-        className="min-h-8  bg-cyan-950 align-middle justify-center"
+        className="min-h-8  bg-emerald-950 align-middle justify-center"
       >
         <Text size="xs" className="uppercase text-white p-2">
           {label}
