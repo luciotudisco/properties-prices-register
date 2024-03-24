@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "django_filters",
     "health_check",
     "rest_framework",
+    "drf_spectacular",
     "properties.apps.PropertiesConfig",
 ]
 
@@ -112,6 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PARSER_CLASSES": ("rest_framework.parsers.JSONParser",),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
@@ -120,7 +122,7 @@ REST_FRAMEWORK = {
 
 LOGGING = {
     "version": 1,
-    "disable_existing_loggers": False,
+    "disable_existing_loggers": True,
     "formatters": {
         "verbose": {
             "format": "{levelname} {asctime} {module} {message}",
@@ -138,10 +140,12 @@ LOGGING = {
         "django": {
             "handlers": ["console"],
             "level": "INFO",
+            "propagate": False,
         },
         "ppr": {
             "handlers": ["console"],
             "level": "DEBUG",
+            "propagate": False,
         },
     },
 }
