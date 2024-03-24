@@ -7,11 +7,12 @@ import { useInstantSearch } from "react-instantsearch";
 const SearchHitClips = function (props: { hit: any }): JSX.Element {
   const { hit } = props;
   const { setIndexUiState } = useInstantSearch();
-  const [propertyType, setPropertyType] = useState(null);
   const [county, setCounty] = useState(null);
   const [locality, setLocality] = useState(null);
   const [neighborhood, setNeighborhood] = useState(null);
   const [street, setStreet] = useState(null);
+  const [propertyType, setPropertyType] = useState(null);
+  const [saleYear, setSaleYear] = useState(null);
 
   useEffect(() => {
     setIndexUiState((prevIndexUiState) => ({
@@ -20,6 +21,9 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
         property_type: propertyType
           ? [propertyType]
           : prevIndexUiState.refinementList?.property_type || [],
+        sale_year: saleYear
+          ? [saleYear]
+          : prevIndexUiState.refinementList?.sale_year || [],
         county: county
           ? [county]
           : prevIndexUiState.refinementList?.county || [],
@@ -34,7 +38,7 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
           : prevIndexUiState.refinementList?.street || [],
       },
     }));
-  }, [propertyType, county, locality, neighborhood, street]);
+  }, [propertyType, county, locality, neighborhood, street, saleYear]);
 
   return (
     <Flex
@@ -45,15 +49,6 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
       direction="row"
       wrap="wrap"
     >
-      <Button
-        variant="subtle"
-        radius="xs"
-        size="xs"
-        p="xs"
-        onClick={() => setPropertyType(hit.property_type)}
-      >
-        {hit.property_type}
-      </Button>
       <Button
         variant="subtle"
         radius="xs"
@@ -116,6 +111,24 @@ const SearchHitClips = function (props: { hit: any }): JSX.Element {
           {hit.street}
         </Button>
       )}
+      <Button
+        variant="subtle"
+        radius="xs"
+        size="xs"
+        p="xs"
+        onClick={() => setPropertyType(hit.property_type)}
+      >
+        {hit.property_type}
+      </Button>
+      <Button
+        variant="subtle"
+        radius="xs"
+        size="xs"
+        p="xs"
+        onClick={() => setSaleYear(hit.sale_year)}
+      >
+        {hit.sale_year}
+      </Button>
     </Flex>
   );
 };

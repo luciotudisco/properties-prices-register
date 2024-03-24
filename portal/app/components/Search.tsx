@@ -20,7 +20,11 @@ const Search = function (): JSX.Element {
   }
 
   return (
-    <Tabs variant="pills" defaultValue={SearchView.LIST}>
+    <Tabs
+      variant="pills"
+      defaultValue={SearchView.LIST}
+      className="mx-5 md:mx-10"
+    >
       <Tabs.List className="justify-end">
         <Tabs.Tab
           value={SearchView.LIST}
@@ -35,7 +39,7 @@ const Search = function (): JSX.Element {
           Graph
         </Tabs.Tab>
       </Tabs.List>
-      <Tabs.Panel value={SearchView.LIST} className="mx-5 md:mx-20 xl:mx-40">
+      <Tabs.Panel value={SearchView.LIST}>
         <SearchCurrentRefinements />
         <Text
           className="text-gray-400 mb-2 text-center"
@@ -46,7 +50,7 @@ const Search = function (): JSX.Element {
         </Text>
         <InfiniteHits hitComponent={SearchHit} showPrevious={false} />
       </Tabs.Panel>
-      <Tabs.Panel value={SearchView.GRAPH} className="mx-5 md:mx-20 xl:mx-40">
+      <Tabs.Panel value={SearchView.GRAPH}>
         <SearchCurrentRefinements />
         <SearchGraph />
       </Tabs.Panel>

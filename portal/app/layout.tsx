@@ -8,7 +8,7 @@ import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import algoliasearch from "algoliasearch";
 import { InstantSearch } from "react-instantsearch";
-import SearchFilters from "./components/SearchFilters";
+import Filters from "./components/Filters";
 import FiltersFooter from "./components/FiltersFooter";
 
 const searchClient = algoliasearch(
@@ -52,12 +52,16 @@ export default function RootLayout({
               }}
               padding="sm"
             >
-              <AppShell.Header className="bg-emerald-950">
+              <AppShell.Header className="bg-emerald-700">
                 <Header opened={opened} toggle={toggle} />
               </AppShell.Header>
               <AppShell.Navbar>
-                <AppShell.Section grow component={ScrollArea}>
-                  <SearchFilters />
+                <AppShell.Section
+                  grow
+                  component={ScrollArea}
+                  className="overscroll-none"
+                >
+                  <Filters />
                 </AppShell.Section>
                 <AppShell.Section>
                   <FiltersFooter opened={opened} toggle={toggle} />

@@ -38,7 +38,7 @@ const SearchHit = function (props: { hit: any }): JSX.Element {
       </Grid.Col>
       <Grid.Col
         span={{ base: 12, md: 4 }}
-        className="flex flex-col h-full gap-2 md:items-end sm:items-start"
+        className="flex flex-col h-full gap-2 md:items-end sm:items-start align-middle justify-center"
       >
         <NumberFormatter
           value={hit.price}

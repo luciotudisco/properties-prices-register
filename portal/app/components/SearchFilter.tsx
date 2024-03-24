@@ -9,6 +9,7 @@ const SearchFilter = function (props: {
   searchable: boolean;
   limit: number;
   showMoreLimit?: number;
+  sortBy?: "count:asc" | "count:desc" | "name:asc" | "name:desc";
 }): JSX.Element {
   const { label, searchable } = props;
   const {
@@ -18,14 +19,19 @@ const SearchFilter = function (props: {
     toggleShowMore,
     isShowingMore,
     hasExhaustiveItems,
-  } = useRefinementList(props);
+  } = useRefinementList({
+    attribute: props.attribute,
+    limit: props.limit,
+    showMoreLimit: props.showMoreLimit,
+    sortBy: [props.sortBy || "count:desc"],
+  });
 
   return (
     <Flex gap="xs" direction="column" className=" m-2 bg-gray-50">
       <Flex
         gap="xs"
         direction="column"
-        className="min-h-8  bg-emerald-950 align-middle justify-center"
+        className="min-h-8  bg-emerald-700 align-middle justify-center"
       >
         <Text size="xs" className="uppercase text-white p-2">
           {label}
