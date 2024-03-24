@@ -4,7 +4,7 @@ import "./globals.css";
 import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider, ScrollArea } from "@mantine/core";
 import Header from "./components/Header";
-import { AppShell, Group } from "@mantine/core";
+import { AppShell } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import algoliasearch from "algoliasearch";
 import { InstantSearch } from "react-instantsearch";
