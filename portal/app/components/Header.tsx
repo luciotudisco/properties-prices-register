@@ -1,5 +1,5 @@
 import SearchBar from "./SearchBar";
-import { Burger, Flex, Group, Title } from "@mantine/core";
+import { Burger, Flex, Title } from "@mantine/core";
 
 export interface HeaderProps {
   opened?: boolean;
