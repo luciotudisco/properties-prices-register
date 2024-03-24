@@ -1,46 +1,46 @@
 import "instantsearch.css/themes/satellite.css";
-import SearchFilter from "./SearchFilter";
+import Filter from "./Filter";
 import { Flex } from "@mantine/core";
 
 const Filters = function (): JSX.Element {
   return (
     <Flex direction="column" gap="xs" m="xs">
-      <SearchFilter
+      <Filter
         attribute="county"
         label="County"
         searchable={true}
         limit={5}
         showMoreLimit={20}
       />
-      <SearchFilter
+      <Filter
         attribute="locality"
         label="Locality"
         searchable={true}
         limit={5}
         showMoreLimit={10}
       />
-      <SearchFilter
+      <Filter
         attribute="neighborhood"
         label="Neighborhood"
         searchable={true}
         limit={5}
         showMoreLimit={10}
       />
-      <SearchFilter
+      <Filter
         attribute="street"
         label="Street"
         searchable={true}
         limit={5}
         showMoreLimit={10}
       />
-      <SearchFilter
+      <Filter
         attribute="property_type"
         label="Property Type"
         searchable={false}
         limit={5}
         showMoreLimit={10}
       />
-      <SearchFilter
+      <Filter
         attribute="sale_year"
         label="Year of sale"
         searchable={false}

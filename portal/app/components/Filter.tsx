@@ -3,7 +3,7 @@ import "instantsearch.css/themes/satellite.css";
 import { Button, Checkbox, Flex, Input, Text } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 
-const SearchFilter = function (props: {
+const Filter = function (props: {
   attribute: string;
   label: string;
   searchable: boolean;
@@ -23,7 +23,7 @@ const SearchFilter = function (props: {
     attribute: props.attribute,
     limit: props.limit,
     showMoreLimit: props.showMoreLimit,
-    sortBy: [props.sortBy || "count:desc"],
+    sortBy: ["isRefined", props.sortBy || "count:desc"],
   });
 
   return (
@@ -84,4 +84,4 @@ const SearchFilter = function (props: {
   );
 };
 
-export default SearchFilter;
+export default Filter;

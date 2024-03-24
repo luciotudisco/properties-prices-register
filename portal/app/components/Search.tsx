@@ -1,7 +1,7 @@
 import { useInstantSearch } from "react-instantsearch";
 import Hits from "./Hits";
 import EmptyHits from "./EmptyHits";
-import SearchCurrentRefinements from "./CurrentRefinements";
+import Refinements from "./Refinements";
 import Graph from "./Graph";
 import { SearchView } from "../types/models";
 import { Flex, Tabs } from "@mantine/core";
@@ -39,11 +39,11 @@ const Search = function (): JSX.Element {
         </Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value={SearchView.LIST}>
-        <SearchCurrentRefinements />
+        <Refinements />
         <Hits />
       </Tabs.Panel>
       <Tabs.Panel value={SearchView.GRAPH}>
-        <SearchCurrentRefinements />
+        <Refinements />
         <Graph />
       </Tabs.Panel>
     </Tabs>

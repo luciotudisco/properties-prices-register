@@ -8,7 +8,7 @@ import { IconBrandGoogleMaps } from "@tabler/icons-react";
 const Hit = function (props: { hit: any }): JSX.Element {
   const { hit } = props;
   return (
-    <Card padding="sm" withBorder>
+    <Card padding="sm" withBorder radius={0}>
       <Flex className="w-full flex-col gap-2">
         <Flex className="w-full flex-col md:flex-row md:justify-between gap-2">
           <Flex className="flex flex-col gap-2">

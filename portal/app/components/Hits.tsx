@@ -15,12 +15,12 @@ const Hits = function (): JSX.Element {
       >
         {nbHits} results found
       </Text>
-      <SimpleGrid cols={1} spacing={2}>
+      <SimpleGrid cols={1} spacing={0}>
         {hits.map((hit) => (
           <Hit key={hit.objectID} hit={hit} />
         ))}
         {!isLastPage && (
-          <Button onClick={showMore} variant="light" size="xs" m="xs">
+          <Button onClick={showMore} variant="light" size="xs" my="xs">
             Show more
           </Button>
         )}

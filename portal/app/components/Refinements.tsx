@@ -2,7 +2,7 @@ import { useCurrentRefinements } from "react-instantsearch";
 import { Box, Chip, rem } from "@mantine/core";
 import { IconX } from "@tabler/icons-react";
 
-const SearchCurrentRefinements = function (): JSX.Element {
+const Refinements = function (): JSX.Element {
   const { items, refine } = useCurrentRefinements();
 
   return (
@@ -26,4 +26,4 @@ const SearchCurrentRefinements = function (): JSX.Element {
   );
 };
 
-export default SearchCurrentRefinements;
+export default Refinements;
