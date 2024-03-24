@@ -1,15 +1,14 @@
-import { InfiniteHits, useInstantSearch, useStats } from "react-instantsearch";
-import SearchHit from "./SearchHit";
+import { useInstantSearch } from "react-instantsearch";
+import Hits from "./Hits";
 import EmptyHits from "./EmptyHits";
 import SearchCurrentRefinements from "./CurrentRefinements";
-import SearchGraph from "./SearchGraph";
+import Graph from "./Graph";
 import { SearchView } from "../types/models";
-import { Flex, Tabs, Text } from "@mantine/core";
+import { Flex, Tabs } from "@mantine/core";
 import { IconChartLine, IconLayoutList } from "@tabler/icons-react";
 
 const Search = function (): JSX.Element {
   const { results } = useInstantSearch();
-  const { nbHits } = useStats();
 
   if (!results.__isArtificial && results.nbHits === 0) {
     return (
@@ -41,18 +40,11 @@ const Search = function (): JSX.Element {
       </Tabs.List>
       <Tabs.Panel value={SearchView.LIST}>
         <SearchCurrentRefinements />
-        <Text
-          className="text-gray-400 mb-2 text-center"
-          variant="caption"
-          size="xs"
-        >
-          {nbHits} results found
-        </Text>
-        <InfiniteHits hitComponent={SearchHit} showPrevious={false} />
+        <Hits />
       </Tabs.Panel>
       <Tabs.Panel value={SearchView.GRAPH}>
         <SearchCurrentRefinements />
-        <SearchGraph />
+        <Graph />
       </Tabs.Panel>
     </Tabs>
   );

@@ -13,7 +13,7 @@ import { LineChart } from "@mantine/charts";
 
 const statsService = new StatsService();
 
-const SearchGraph = function (): JSX.Element {
+const Graph = function (): JSX.Element {
   const { items } = useCurrentRefinements();
   const [aggregation] = useState<AggregationPeriod>(AggregationPeriod.YEAR);
   const [pricesStats, setPricesStats] = useState<StatsRecord[]>([]);
@@ -118,4 +118,4 @@ const SearchGraph = function (): JSX.Element {
   );
 };
 
-export default SearchGraph;
+export default Graph;
