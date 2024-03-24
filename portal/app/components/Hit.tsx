@@ -13,7 +13,7 @@ const Hit = function (props: { hit: any }): JSX.Element {
         <Flex className="w-full flex-col md:flex-row md:justify-between gap-2">
           <Flex className="flex flex-col gap-2">
             <Flex className="flex w-full flex-row gap-2 items-center">
-              <Text className="text-zinc-900 text-nowrap" size="sm">
+              <Text className="text-zinc-900 text-nowrap" size="xs">
                 {hit.raw_address}
               </Text>
               <NavLink
@@ -34,7 +34,7 @@ const Hit = function (props: { hit: any }): JSX.Element {
           <NumberFormatter
             value={hit.price}
             thousandSeparator={true}
-            className="text-zinc-900 font-bold flex items-center"
+            className="text-zinc-900 font-bold flex items-center text-xs"
             prefix="€"
           />
         </Flex>

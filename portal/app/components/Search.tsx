@@ -4,15 +4,23 @@ import EmptyHits from "./EmptyHits";
 import Refinements from "./Refinements";
 import Graph from "./Graph";
 import { SearchView } from "../types/models";
-import { Flex, Tabs } from "@mantine/core";
+import { Flex, Loader, LoadingOverlay, Tabs } from "@mantine/core";
 import { IconChartLine, IconLayoutList } from "@tabler/icons-react";
 
 const Search = function (): JSX.Element {
-  const { results } = useInstantSearch();
+  const { results, status } = useInstantSearch();
+
+  if (status === "loading") {
+    return (
+      <Flex className="flex h-svh w-full justify-center items-center">
+        <Loader />
+      </Flex>
+    );
+  }
 
   if (!results.__isArtificial && results.nbHits === 0) {
     return (
-      <Flex align="center" justify="center" className="h-full">
+      <Flex className="flex h-svh w-full justify-center items-center">
         <EmptyHits />
       </Flex>
     );
@@ -22,7 +30,7 @@ const Search = function (): JSX.Element {
     <Tabs
       variant="pills"
       defaultValue={SearchView.LIST}
-      className="mx-5 md:mx-10"
+      className="mx-5 md:mx-10 xl:mx-40"
     >
       <Tabs.List className="justify-end">
         <Tabs.Tab
