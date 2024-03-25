@@ -47,7 +47,7 @@ const Filter = function (props: {
           size="xs"
         />
         {items.map((item) => (
-          <Flex gap="xs" direction="row" align="center">
+          <Flex gap="xs" direction="row" align="center" key={item.value}>
             <Checkbox
               checked={item.isRefined}
               size="xs"

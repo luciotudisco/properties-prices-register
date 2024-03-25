@@ -1,5 +1,5 @@
 import { Button, Flex, Indicator } from "@mantine/core";
-import { useInstantSearch, useStats } from "react-instantsearch";
+import { useClearRefinements, useStats } from "react-instantsearch";
 
 interface FiltersFooterProps {
   opened?: boolean;
@@ -8,21 +8,12 @@ interface FiltersFooterProps {
 
 const FiltersFooter = function (props: FiltersFooterProps): JSX.Element {
   const { toggle } = props;
-  const { setIndexUiState } = useInstantSearch();
+  const { refine } = useClearRefinements();
   const { nbHits } = useStats();
-
-  function clearFilters() {
-    setIndexUiState((prevIndexUiState) => ({
-      ...prevIndexUiState,
-      query: "",
-      refinementList: {},
-    }));
-    toggle();
-  }
 
   return (
     <Flex align="center" direction="column" className="py-5 px-10" gap="md">
-      <Button onClick={clearFilters} variant="light" className="w-full">
+      <Button onClick={refine} variant="light" className="w-full">
         Clear
       </Button>
       <Indicator
