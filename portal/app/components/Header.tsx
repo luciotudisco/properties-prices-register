@@ -9,7 +9,7 @@ export interface HeaderProps {
 const Header = function (props: HeaderProps): JSX.Element {
   const { opened, toggle } = props;
   return (
-    <Flex align="center" gap="sm" className="w-full h-full px-5 flex-row">
+    <Flex align="center" gap="sm" className="w-full h-full px-2 flex-row">
       <Burger
         opened={opened}
         onClick={toggle}

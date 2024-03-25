@@ -4,7 +4,7 @@ import EmptyHits from "./EmptyHits";
 import Refinements from "./Refinements";
 import Graph from "./Graph";
 import { SearchView } from "../types/models";
-import { Flex, Loader, LoadingOverlay, Tabs } from "@mantine/core";
+import { Flex, Loader, Tabs } from "@mantine/core";
 import { IconChartLine, IconLayoutList } from "@tabler/icons-react";
 
 const Search = function (): JSX.Element {
@@ -32,7 +32,7 @@ const Search = function (): JSX.Element {
       defaultValue={SearchView.LIST}
       className="mx-5 md:mx-10 xl:mx-40"
     >
-      <Tabs.List className="justify-end">
+      <Tabs.List className="justify-center md:justify-end">
         <Tabs.Tab
           value={SearchView.LIST}
           leftSection={<IconLayoutList size={16} />}

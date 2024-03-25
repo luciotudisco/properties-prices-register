@@ -17,6 +17,7 @@ const FiltersFooter = function (props: FiltersFooterProps): JSX.Element {
       query: "",
       refinementList: {},
     }));
+    toggle();
   }
 
   return (

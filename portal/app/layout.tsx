@@ -44,7 +44,7 @@ export default function RootLayout({
             }}
           >
             <AppShell
-              header={{ height: { base: 50, md: 50, lg: 50 } }}
+              header={{ height: { base: 45, md: 45, lg: 45 } }}
               navbar={{
                 width: { base: 200, md: 300, lg: 400 },
                 breakpoint: "sm",
